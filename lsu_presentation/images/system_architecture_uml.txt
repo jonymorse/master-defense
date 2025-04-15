@@ -1,0 +1,118 @@
+@startuml VR Training Environment Architecture
+
+' Use LSU colors
+!define PURPLE #461D7C
+!define GOLD #FDD023
+!define LIGHTPURPLE #8075a4
+!define LIGHTGOLD #ffe478
+
+skinparam component {
+  BackgroundColor LIGHTPURPLE
+  BorderColor PURPLE
+  FontColor black
+}
+
+skinparam interface {
+  BackgroundColor GOLD
+  BorderColor PURPLE
+}
+
+skinparam note {
+  BackgroundColor LIGHTGOLD
+  BorderColor GOLD
+  FontColor black
+}
+
+package "VR Training Environment" {
+  [VR User Interface] as UI
+  [Physics Engine] as PE
+  [Task Management System] as TMS
+  [Data Collection Module] as DCM
+  [Task Progression Controller] as TPC
+  [CT Assessment Framework] as CAF
+  
+  package "Robotic System Simulation" {
+    [Robotic Arm Controller] as RAC
+    [Mecanum Wheel Platform] as MWP
+    [Sensor Simulation] as SS
+    [Object Manipulation System] as OMS
+  }
+  
+  package "Environment Renderer" {
+    [Unreal Engine Core] as UEC
+    [Construction Environment Assets] as CEA
+    [Obstacle Generator] as OG
+    [Custom Physics Properties] as CPP
+  }
+}
+
+package "External Systems" {
+  [VR Headset & Controllers] as VHC
+  [User Data Storage] as UDS
+}
+
+' Define interfaces
+interface "User Input" as UserInput
+interface "Performance Data" as PerformanceData
+interface "Visual Output" as VisualOutput
+interface "Physics Data" as PhysicsData
+interface "Environment Config" as EnvConfig
+interface "CT Metrics" as CTMetrics
+
+' Connect components
+UI -- UserInput
+VHC -- UserInput
+UI -- VisualOutput
+UEC -- VisualOutput
+
+PE -- PhysicsData
+RAC -- PhysicsData
+MWP -- PhysicsData
+OMS -- PhysicsData
+CPP -- PhysicsData
+
+TMS -- EnvConfig
+OG -- EnvConfig
+CEA -- EnvConfig
+TPC -- EnvConfig
+
+DCM -- PerformanceData
+CAF -- CTMetrics
+UDS -- PerformanceData
+UDS -- CTMetrics
+
+' Dependencies
+UI ..> UEC : renders through
+RAC ..> OMS : controls
+MWP ..> OMS : supports
+TMS ..> TPC : configures
+TPC ..> RAC : sets difficulty
+TPC ..> OG : controls complexity
+DCM ..> CAF : provides data to
+SS ..> RAC : provides feedback
+SS ..> MWP : provides feedback
+CPP ..> PE : extends
+
+note bottom of RAC
+  Provides kinematics for 
+  robotic arm simulation
+end note
+
+note bottom of MWP 
+  Enables omni-directional
+  movement in VR space
+end note
+
+note right of TPC
+  Controls progressive 
+  difficulty levels (1-4)
+end note
+
+note bottom of CAF
+  Measures Decomposition,
+  Pattern Recognition,
+  Abstraction, and
+  Algorithmic Thinking
+end note
+
+@enduml

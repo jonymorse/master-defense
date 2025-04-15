@@ -1,0 +1,658 @@
+/* LSU Presentation Template CSS */
+
+/* Base Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Calibri', 'Segoe UI', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* LSU Colors */
+:root {
+    --lsu-purple: #461D7C;
+    --lsu-gold: #FDD023;
+    --light-purple: #8075a4;
+    --light-gold: #ffe478;
+    --dark-text: #333333;
+    --light-text: #ffffff;
+    --background: #f9f9f9;
+}
+
+/* Slide Container */
+.slide-container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Slide Styles */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+    padding: 40px 50px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+}
+
+/* Two column with image layout */
+.two-col-image-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.columns-container {
+    display: flex;
+    gap: 30px;
+    flex: 0 0 auto;
+}
+
+.bottom-image {
+    margin-top: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-image img {
+    max-height: 250px;
+    object-fit: contain;
+    border: none;
+    box-shadow: none;
+}
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* LSU Header Styling */
+.lsu-header {
+    background-color: var(--lsu-purple);
+    color: var(--light-text);
+    padding: 5px 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 55px; /* Fixed height */
+}
+
+.lsu-logo {
+    display: flex;
+    align-items: center;
+}
+
+.lsu-logo img {
+    height: 45px;
+    width: auto;
+    margin-right: 10px;
+}
+
+/* LSU Footer Styling */
+.lsu-footer {
+    background-color: var(--lsu-purple);
+    color: var(--light-text);
+    padding: 8px 40px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    height: 36px; /* Fixed height */
+}
+
+/* Content Styling */
+.slide-content {
+    margin-top: 75px;  /* Standardized top margin */
+    margin-bottom: 60px;  /* Standardized bottom margin */
+    display: flex;
+    flex: 1;
+    gap: 40px;  /* Standardized gap between columns */
+    width: 100%;  /* Ensure content takes full width */
+}
+
+.slide-title {
+    font-size: 3.4rem;  /* Increased font size */
+    color: var(--lsu-purple);
+    font-weight: bold;
+    margin-bottom: 20px;  /* Standardized spacing */
+    border-bottom: 5px solid var(--lsu-gold);
+    padding-bottom: 10px;
+    margin-top: 70px;  /* Standardized spacing */
+}
+
+.slide-subtitle {
+    font-size: 2.2rem;  /* Increased font size */
+    color: var(--lsu-purple);
+    margin-bottom: 20px;
+}
+
+.column {
+    flex: 1;
+}
+
+/* Dynamic column sizing for better space utilization */
+.column-60 {
+    flex: 0 0 60%;
+}
+
+.column-40 {
+    flex: 0 0 40%;
+}
+
+.column-title {
+    font-size: 2.1rem;  /* Increased font size */
+    color: var(--lsu-purple);
+    font-weight: bold;
+    margin-bottom: 16px;  /* Standardized spacing */
+    border-left: 6px solid var(--lsu-gold);
+    padding-left: 14px;  /* Slightly increased padding */
+    margin-top: 0;  /* Ensure consistent spacing */
+}
+
+.column ul {
+    padding-left: 25px;  /* Standardized padding */
+    margin-top: 16px;  /* Increased spacing */
+}
+
+.column li, .column p {
+    font-size: 1.6rem;  /* Increased text size for better readability */
+    margin-bottom: 18px;  /* More space between list items */
+    line-height: 1.5;  /* Increased line height for readability */
+}
+
+/* Custom LSU Bullet Points - standardized across all list types */
+.column ul li::marker,
+.compact-list li::marker,
+.full-width-list li::marker {
+    content: "➤ ";
+    color: var(--lsu-gold);
+    font-size: 1.7rem;  /* Larger bullet points */
+}
+
+.authors {
+    font-size: 1rem;
+    margin-top: 20px;
+    color: var(--dark-text);
+}
+
+/* Progress Bar Styling - Positioned higher above footer */
+.progress-container {
+    position: fixed;
+    bottom: 70px; /* Further increased to position higher above the footer */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 300px;
+    height: 6px;
+    background-color: rgba(70, 29, 124, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--lsu-gold);
+    width: 0%;
+    transition: width 0.3s ease-in-out;
+    box-shadow: 0 0 5px rgba(253, 208, 35, 0.7);
+}
+
+/* Keyboard Navigation Hint */
+.keyboard-hint {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    font-size: 0.8rem;
+    color: var(--dark-text);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.keyboard-hint:hover {
+    opacity: 1;
+}
+
+/* Make slides clickable for navigation */
+.slide-container {
+    cursor: pointer;
+}
+
+/* Specialized Content Styles */
+.acknowledgement {
+    text-align: center;
+    font-style: italic;
+    margin: 80px auto 0 auto;  /* Standardized spacing */
+    padding: 40px;  /* Increased padding */
+    background-color: rgba(253, 208, 35, 0.1);
+    border-left: 6px solid var(--lsu-gold);
+    max-width: 80%;
+    font-size: 1.7rem;  /* Increased font size */
+    line-height: 1.6;
+}
+
+.acknowledgement p {
+    margin-bottom: 20px;  /* Standardized spacing between paragraphs */
+}
+
+.acknowledgement p:last-child {
+    margin-bottom: 0;
+}
+
+/* Title Slide Special Styling */
+.title-slide {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://www.lsu.edu/together/images/campanile.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.title-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80%;
+}
+
+.title-slide .slide-title {
+    font-size: 3.6rem;  /* Larger title */
+    margin-top: 0;
+    margin-bottom: 40px;  /* Standardized spacing */
+    text-align: center;
+}
+
+.title-slide .slide-subtitle {
+    font-size: 2.2rem;  /* Increased subtitle size */
+    max-width: 90%;
+    margin: 0 auto 50px auto;  /* Standardized spacing */
+    text-align: center;
+}
+
+.title-slide .authors {
+    font-size: 1.4rem;  /* Larger author text */
+    margin: 0 auto;
+    max-width: 80%;
+    text-align: center;
+    line-height: 1.6;  /* Better line height for multiple authors */
+}
+
+/* Image Styling - standardized spacing and sizing */
+.slide-image {
+    text-align: center;
+    margin: 20px 0;  /* Standardized margin */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide-image img {
+    max-width: 100%;
+    max-height: 400px;  /* Further increased height */
+    object-fit: contain;
+    border: none;
+    box-shadow: none;
+}
+
+/* Full-slide diagram styling for architecture slide */
+.diagram-container {
+    width: 100%;
+    height: 65vh; /* Reduced from 75vh to 65vh to make the diagram slightly smaller */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.full-slide-diagram {
+    max-height: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 0;
+    padding: 0;
+    /* No border or shadow to maximize space */
+}
+
+.centered-caption {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.centered-caption .caption {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--dark-text);
+    margin: 0;
+}
+
+
+/* Consistent layout classes for all slide types */
+.flex-column-layout,
+.standard-grid-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.content-section,
+.grid-content-section {
+    flex: 0 0 auto;
+    margin-bottom: 20px;  /* Standardized spacing */
+}
+
+/* Image grid layouts */
+.image-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px 0;
+    flex: 1;
+    align-items: center;
+}
+
+.image-grid img {
+    width: 31%;  /* Slightly smaller to account for gap */
+    max-height: 260px;
+    object-fit: contain;
+    border: none;
+    box-shadow: none;
+}
+
+.image-grid-large {
+    display: flex;
+    justify-content: center;
+    gap: 45px;  /* Increased gap */
+    margin: 20px 0;  /* Consistent with other elements */
+    flex: 1;
+    align-items: center;
+}
+
+.image-grid-large img {
+    max-width: 45%;
+    max-height: 300px;
+    object-fit: contain;
+    border: none;
+    box-shadow: none;
+}
+
+.column-with-image {
+    display: flex;
+    flex-direction: column;
+}
+
+.column-with-image .slide-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.flex-grow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Standardized spacing for all list types */
+.compact-list {
+    padding-left: 25px;  /* Consistent with other lists */
+    margin-top: 12px;
+}
+
+.compact-list li {
+    font-size: 1.6rem;  /* Increased font size */
+    margin-bottom: 18px !important;  /* Increased spacing */
+    line-height: 1.5;  /* Same as standard lists */
+}
+
+/* Centered content for full width slides */
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;  /* Ensure content takes full width */
+}
+
+.content-container {
+    max-width: 100%;
+    width: 100%;
+}
+
+.full-width-list {
+    columns: 2;
+    column-gap: 60px;  /* Increased gap between columns */
+    padding-left: 25px;  /* Standardized padding */
+    margin-top: 16px;  /* Increased margin */
+    width: 100%;  /* Ensure list takes full width */
+}
+
+.full-width-list li {
+    font-size: 1.6rem;  /* Increased text size */
+    margin-bottom: 18px;  /* Increased spacing */
+    line-height: 1.5;  /* Consistent line height */
+    break-inside: avoid;  /* Prevent list items from breaking across columns */
+}
+
+/* Standard list for consistent styling across slide types */
+.standard-list {
+    padding-left: 25px;  /* Standardized padding */
+    margin-top: 16px;  /* Increased margin */
+}
+
+.standard-list li {
+    font-size: 1.6rem;  /* Increased text size */
+    margin-bottom: 18px;  /* Increased spacing */
+    line-height: 1.5;  /* Consistent with other text */
+}
+
+.standard-text {
+    font-size: 1.6rem;  /* Increased text size */
+    line-height: 1.5;
+    margin: 16px 0;  /* Increased margin */
+}
+
+/* Standard grid layout for image grid slides */
+.standard-grid-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.grid-content-section {
+    flex: 0 0 auto;
+    margin-bottom: 20px;  /* Consistent spacing before images */
+}
+
+.content-section-title {
+    font-size: 2.1rem;  /* Increased font size */
+    color: var(--lsu-purple);
+    font-weight: bold;
+    margin-bottom: 20px;  /* Increased spacing */
+    margin-top: 0;  /* Start at the top for consistency */
+    border-left: 6px solid var(--lsu-gold);
+    padding-left: 14px;  /* Increased padding */
+}
+
+/* Add spacing between section titles */
+.content-section-title:not(:first-child) {
+    margin-top: 30px;  /* Increased spacing */
+}
+
+.full-width-text {
+    font-size: 1.6rem;  /* Increased text size */
+    line-height: 1.5;  /* Consistent line height */
+    text-align: center;
+    max-width: 80%;
+    margin: 30px auto;  /* Increased spacing */
+}
+
+.caption {
+    font-size: 1.4rem;  /* Increased font size */
+    color: var(--dark-text);
+    text-align: center;
+    font-style: italic;
+    margin-top: 12px;  /* Increased spacing */
+    margin-bottom: 0;
+}
+
+/* Progressive content styling for slide 2 */
+.progressive-content {
+    width: 100%;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Position each section in its final place from the start */
+.progressive-content .content-section {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    position: static; /* Keep in normal flow */
+    margin-bottom: 30px;
+    visibility: hidden; /* Hide but keep layout space */
+}
+
+.progressive-content .content-section.active {
+    opacity: 1;
+    visibility: visible;
+    animation: fadeInPlace 0.8s ease;
+}
+
+@keyframes fadeInPlace {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.progress-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: auto;
+    padding: 20px 0;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: rgba(70, 29, 124, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.dot:hover {
+    background-color: rgba(70, 29, 124, 0.3);
+}
+
+.dot.active {
+    background-color: var(--lsu-purple);
+    transform: scale(1.2);
+    border: 2px solid var(--lsu-gold);
+    box-shadow: 0 0 8px rgba(253, 208, 35, 0.5);
+}
+
+.progressive-slide .slide-content {
+    min-height: 550px; /* Increased height */
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px; /* Add padding to the top */
+    justify-content: flex-start; /* Start content from the top */
+}
+
+/* Styling for content sections */
+.progressive-content .content-section-title {
+    font-size: 2.2rem;  /* Increased font size */
+    color: var(--lsu-purple);
+    font-weight: bold;
+    margin-bottom: 20px;  /* Increased spacing */
+    border-left: 6px solid var(--lsu-gold);
+    padding-left: 18px;  /* Increased padding */
+    margin-top: 36px;  /* Increased spacing */
+}
+
+/* Specific positioning for the Problem section */
+.progressive-content .content-section:first-child {
+    margin-top: 36px; /* Add top margin to push down the first section */
+}
+
+.progressive-content .content-section:first-child .content-section-title {
+    margin-top: 0;
+}
+
+/* Override for progressive content to disable columns in lists */
+.progressive-content .full-width-list {
+    columns: 1;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Static wrapper to prevent content jumping */
+.static-content-wrapper {
+    position: relative;
+    min-height: 500px; /* Increased height to accommodate all content */
+    width: 100%;
+    padding-top: 20px; /* Add padding at the top */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content from the top */
+}
+
+/* Custom styling for slide 2 */
+#slide-2 .content-container {
+    max-width: 90%;
+    margin: 20px auto 0; /* Add top margin */
+    padding-top: 10px; /* Add padding at the top */
+}
+
+/* For slide 2, remove column styling to ensure all content is visible */
+#slide-2 .full-width-list li {
+    break-inside: avoid;
+    padding-bottom: 5px;
+}
+
+/* Make the "Key Research Questions" section stand out */
+.progressive-content .content-section:nth-child(3) .full-width-list li {
+    margin-bottom: 18px;
+    font-weight: 500;
+}
+
+/* Fix for Meta Quest 3 image with checkered background */
+img[src*="metaquest3"] {
+    background-color: white;
+}

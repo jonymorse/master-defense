@@ -1,0 +1,147 @@
+<svg viewBox="0 0 1000 800" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="800" fill="#ffffff" />
+  
+  <!-- Title -->
+  <text x="500" y="40" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">Layered Blueprint Architecture for VR Training System</text>
+  
+  <!-- Layer 1: Core Framework -->
+  <rect x="150" y="80" width="700" height="110" rx="10" ry="10" fill="#f7e6d2" stroke="#666666" stroke-width="2" />
+  <text x="500" y="105" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">Core Game Framework</text>
+  
+  <!-- Game Framework Components -->
+  <rect x="200" y="120" width="180" height="50" rx="5" ry="5" fill="#f2d7b5" stroke="#666666" stroke-width="1.5" />
+  <text x="290" y="150" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">VRTrainingGameMode</text>
+  
+  <rect x="410" y="120" width="180" height="50" rx="5" ry="5" fill="#f2d7b5" stroke="#666666" stroke-width="1.5" />
+  <text x="500" y="150" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">VRTrainingGameState</text>
+  
+  <rect x="620" y="120" width="180" height="50" rx="5" ry="5" fill="#f2d7b5" stroke="#666666" stroke-width="1.5" />
+  <text x="710" y="150" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">VRTrainingPlayerController</text>
+  
+  <!-- Layer 2: System Managers -->
+  <rect x="100" y="220" width="800" height="110" rx="10" ry="10" fill="#e8f4d4" stroke="#666666" stroke-width="2" />
+  <text x="500" y="245" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">System Managers</text>
+  
+  <rect x="150" y="260" width="160" height="50" rx="5" ry="5" fill="#d9eebc" stroke="#666666" stroke-width="1.5" />
+  <text x="230" y="290" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">TaskManager</text>
+  
+  <rect x="330" y="260" width="160" height="50" rx="5" ry="5" fill="#d9eebc" stroke="#666666" stroke-width="1.5" />
+  <text x="410" y="290" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">EnvironmentManager</text>
+  
+  <rect x="510" y="260" width="160" height="50" rx="5" ry="5" fill="#d9eebc" stroke="#666666" stroke-width="1.5" />
+  <text x="590" y="290" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">MetricsCollector</text>
+  
+  <rect x="690" y="260" width="160" height="50" rx="5" ry="5" fill="#d9eebc" stroke="#666666" stroke-width="1.5" />
+  <text x="770" y="290" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">RoboticSystemManager</text>
+  
+  <!-- Layer 3: Task System -->
+  <rect x="100" y="360" width="240" height="400" rx="10" ry="10" fill="#e6f2ff" stroke="#666666" stroke-width="2" />
+  <text x="220" y="385" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">Task System</text>
+  
+  <rect x="120" y="405" width="200" height="70" rx="5" ry="5" fill="#d4e6f1" stroke="#666666" stroke-width="1.5" />
+  <text x="220" y="430" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">TaskBase</text>
+  <text x="220" y="450" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">Parent Class for All Tasks</text>
+  
+  <rect x="120" y="490" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="165" y="515" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_1</text>
+  
+  <rect x="230" y="490" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="275" y="515" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_2</text>
+  
+  <rect x="120" y="545" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="165" y="570" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_3</text>
+  
+  <rect x="230" y="545" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="275" y="570" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_4</text>
+  
+  <rect x="120" y="600" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="165" y="625" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_5</text>
+  <text x="165" y="640" font-family="Arial" font-size="10" fill="#333333" text-anchor="middle">(Terrestrial)</text>
+  
+  <rect x="230" y="600" width="90" height="40" rx="5" ry="5" fill="#aed6f1" stroke="#666666" stroke-width="1" />
+  <text x="275" y="625" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle" fill="#333333">Task_6</text>
+  <text x="275" y="640" font-family="Arial" font-size="10" fill="#333333" text-anchor="middle">(Space)</text>
+  
+  <rect x="120" y="655" width="200" height="90" rx="5" ry="5" fill="#d4e6f1" stroke="#666666" stroke-width="1.5" />
+  <text x="220" y="680" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Task Elements</text>
+  <text x="220" y="700" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Success/Failure Logic</text>
+  <text x="220" y="720" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Performance Metrics</text>
+  <text x="220" y="740" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Difficulty Parameters</text>
+  
+  <!-- Layer 3: Environment System -->
+  <rect x="380" y="360" width="240" height="400" rx="10" ry="10" fill="#f0ffe6" stroke="#666666" stroke-width="2" />
+  <text x="500" y="385" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">Environment System</text>
+  
+  <rect x="400" y="405" width="200" height="80" rx="5" ry="5" fill="#d5f5e3" stroke="#666666" stroke-width="1.5" />
+  <text x="500" y="430" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">PhysicsVolume</text>
+  <text x="500" y="450" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Gravity Control</text>
+  <text x="500" y="470" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Environmental Physics</text>
+  
+  <rect x="400" y="500" width="200" height="80" rx="5" ry="5" fill="#d5f5e3" stroke="#666666" stroke-width="1.5" />
+  <text x="500" y="525" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">ObstacleManager</text>
+  <text x="500" y="545" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Static/Dynamic Obstacles</text>
+  <text x="500" y="565" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Surface Variations</text>
+  
+  <rect x="400" y="595" width="200" height="150" rx="5" ry="5" fill="#d5f5e3" stroke="#666666" stroke-width="1.5" />
+  <text x="500" y="620" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Environment Levels</text>
+  <text x="500" y="640" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">WarehouseEnvironment</text>
+  <line x1="425" y1="650" x2="575" y2="650" stroke="#666666" stroke-width="1" />
+  <text x="500" y="670" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">ConstructionEnvironment</text>
+  <line x1="425" y1="680" x2="575" y2="680" stroke="#666666" stroke-width="1" />
+  <text x="500" y="700" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">ExtraterrestrialEnvironment</text>
+  <line x1="425" y1="710" x2="575" y2="710" stroke="#666666" stroke-width="1" />
+  <text x="500" y="730" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">Level Streaming System</text>
+  
+  <!-- Layer 3: Robotic System -->
+  <rect x="660" y="360" width="240" height="400" rx="10" ry="10" fill="#fff2f2" stroke="#666666" stroke-width="2" />
+  <text x="780" y="385" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">Robotic System</text>
+  
+  <rect x="680" y="405" width="200" height="100" rx="5" ry="5" fill="#fadbd8" stroke="#666666" stroke-width="1.5" />
+  <text x="780" y="430" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">RoboticArm</text>
+  <text x="780" y="450" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• IK Solver</text>
+  <text x="780" y="470" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Grip Control</text>
+  <text x="780" y="490" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Animation Blueprint</text>
+  
+  <rect x="680" y="520" width="200" height="100" rx="5" ry="5" fill="#fadbd8" stroke="#666666" stroke-width="1.5" />
+  <text x="780" y="545" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">MecanumWheelBase</text>
+  <text x="780" y="565" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Movement Physics</text>
+  <text x="780" y="585" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Wheel Control</text>
+  <text x="780" y="605" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Surface Adaptation</text>
+  
+  <rect x="680" y="635" width="200" height="110" rx="5" ry="5" fill="#fadbd8" stroke="#666666" stroke-width="1.5" />
+  <text x="780" y="660" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">RoboticController</text>
+  <text x="780" y="680" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• VR Input Handling</text>
+  <text x="780" y="700" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Collision Detection</text>
+  <text x="780" y="720" font-family="Arial" font-size="12" fill="#333333" text-anchor="middle">• Haptic Feedback</text>
+  
+  <!-- Layer connection indicators (small arrows) -->
+  <!-- From Core to Managers -->
+  <polygon points="290,190 280,200 300,200" fill="#666666" />
+  <polygon points="500,190 490,200 510,200" fill="#666666" />
+  <polygon points="710,190 700,200 720,200" fill="#666666" />
+  
+  <!-- From Managers to subsystems -->
+  <polygon points="230,310 220,320 240,320" fill="#666666" />
+  <polygon points="410,310 400,320 420,320" fill="#666666" />
+  <polygon points="590,310 580,320 600,320" fill="#666666" />
+  <polygon points="770,310 760,320 780,320" fill="#666666" />
+
+  <!-- Data Flow Annotation Arrows -->
+  <!-- Task System to Assessment -->
+  <path d="M 340 530 L 370 530 L 370 590 L 510 590" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+  
+  <!-- Environment to Robotic System -->
+  <path d="M 600 480 L 630 480 L 630 550 L 680 550" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+  
+  <!-- Define the arrowhead marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666666" />
+    </marker>
+  </defs>
+  
+  <!-- Communication/Dependency Text -->
+  <text x="405" y="510" font-family="Arial" font-size="12" font-style="italic" fill="#666666">Physics Data</text>
+  <text x="505" y="570" font-family="Arial" font-size="12" font-style="italic" fill="#666666">Performance Data</text>
+</svg>
