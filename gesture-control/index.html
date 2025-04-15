@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSU Presentation with Gesture Control</title>
+    <link rel="stylesheet" href="../lsu_presentation/lsu-style.css">
+    <style>
+        /* Additional styles for gesture control indicators */
+        .gesture-indicator {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            padding: 10px;
+            background-color: rgba(70, 29, 124, 0.7); /* LSU purple with transparency */
+            color: white;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1002;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(253, 208, 35, 0.7); /* LSU gold border */
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .webcam-container {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            width: 160px;
+            height: 120px;
+            border: 2px solid rgba(70, 29, 124, 0.7); /* LSU purple */
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        
+        /* Toggle button for gesture control */
+        .gesture-toggle {
+            position: fixed;
+            right: 10px;
+            top: 10px;
+            padding: 10px 15px;
+            background-color: rgba(70, 29, 124, 0.7); /* LSU purple */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1003;
+            font-family: Arial, sans-serif;
+        }
+        
+        .gesture-toggle:hover {
+            background-color: rgba(70, 29, 124, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slides will be dynamically inserted here by JavaScript -->
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <!-- Gesture control toggle button -->
+    <button class="gesture-toggle" id="gesture-toggle">Enable Gesture Control</button>
+    
+    <!-- Gesture indicator element -->
+    <div class="gesture-indicator" id="gesture-indicator"></div>
+
+    <!-- Load the original presentation scripts with path modification -->
+    <script>
+        // Temporarily override fetch to modify the URL for content.json and SVG diagrams
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options) {
+            if (url === 'content.json') {
+                url = '../lsu_presentation/content.json';
+            }
+            // Check if this is an SVG file from diagrams folder
+            if (url.startsWith('diagrams/') && url.endsWith('.svg')) {
+                url = '../lsu_presentation/' + url;
+            }
+            return originalFetch(url, options);
+        };
+        
+        // Fix image and diagram paths after slides are loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for slides to be created
+            setTimeout(function() {
+                // Fix all image paths to point to the correct location
+                const images = document.querySelectorAll('img');
+                images.forEach(function(img) {
+                    if (img.src.includes('PNG Files')) {
+                        // Fix the path to use the correct directory
+                        img.src = img.src.replace(/PNG\ Files/, '../PNG Files');
+                    }
+                    if (img.src.includes('images/')) {
+                        // Fix the path to use the correct directory
+                        img.src = img.src.replace(/images\//, '../lsu_presentation/images/');
+                    }
+                    if (img.src.includes('diagrams/')) {
+                        // Fix the path for diagram SVGs
+                        img.src = img.src.replace(/diagrams\//, '../lsu_presentation/diagrams/');
+                    }
+                });
+                
+                // Also fix any SVG objects that might be used for diagrams
+                const svgObjects = document.querySelectorAll('object[type="image/svg+xml"]');
+                svgObjects.forEach(function(obj) {
+                    if (obj.data && obj.data.includes('diagrams/')) {
+                        // Fix the path to use the correct directory
+                        obj.data = obj.data.replace(/diagrams\//, '../lsu_presentation/diagrams/');
+                    }
+                });
+            }, 500); // Give it time to load slides
+        });
+    </script>
+    <script src="../lsu_presentation/slides.js"></script>
+    
+    <!-- Load our gesture control script -->
+    <script src="gesture-control.js"></script>
+    
+    <script>
+        // Add toggle functionality for gesture control
+        document.getElementById('gesture-toggle').addEventListener('click', function() {
+            const button = document.getElementById('gesture-toggle');
+            
+            if (button.textContent === 'Enable Gesture Control') {
+                // Initialize gesture control
+                if (typeof initGestureControl === 'function') {
+                    initGestureControl();
+                    button.textContent = 'Disable Gesture Control';
+                } else {
+                    alert('Gesture control script not loaded correctly. Please refresh the page.');
+                }
+            } else {
+                // Reload the page to disable gesture control
+                // This is a simple approach; a more sophisticated one would properly clean up resources
+                location.reload();
+            }
+        });
+    </script>
+</body>
+</html>

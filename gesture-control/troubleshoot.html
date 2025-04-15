@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Control Troubleshooting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        h1, h2 {
+            color: #461D7C; /* LSU purple */
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .log-container {
+            height: 200px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            padding: 10px;
+            font-family: monospace;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        button {
+            background-color: #461D7C;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #33155A;
+        }
+        
+        #webcam-container {
+            width: 320px;
+            height: 240px;
+            border: 2px solid #461D7C;
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #debug-info {
+            margin-top: 10px;
+            font-family: monospace;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gesture Control Troubleshooting</h1>
+        <p>This page helps diagnose issues with the webcam-based gesture control system.</p>
+        
+        <div class="section">
+            <h2>Webcam Test</h2>
+            <p>Check if your webcam is working properly.</p>
+            <div id="webcam-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="button-row">
+                <button id="start-camera">Start Camera</button>
+                <button id="stop-camera">Stop Camera</button>
+            </div>
+            <div id="camera-status">Camera status: Not started</div>
+        </div>
+        
+        <div class="section">
+            <h2>Hand Tracking Test</h2>
+            <p>Check if hand tracking is working correctly.</p>
+            <div class="button-row">
+                <button id="start-tracking">Start Hand Tracking</button>
+                <button id="stop-tracking">Stop Tracking</button>
+            </div>
+            <div id="tracking-status">Tracking status: Not started</div>
+            <div id="debug-info">No hand detected yet</div>
+        </div>
+        
+        <div class="section">
+            <h2>Gesture Detection Test</h2>
+            <p>Test if gestures are being detected properly.</p>
+            <div class="button-row">
+                <button id="test-swipe-right">Test Swipe Right</button>
+                <button id="test-swipe-left">Test Swipe Left</button>
+            </div>
+            <div id="gesture-log" class="log-container"></div>
+        </div>
+        
+        <div class="section">
+            <h2>MediaPipe Libraries Test</h2>
+            <p>Check if all required libraries are loaded correctly.</p>
+            <table id="libraries-table">
+                <tr>
+                    <th>Library</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>MediaPipe Camera Utils</td>
+                    <td id="camera-utils-status">Not loaded</td>
+                </tr>
+                <tr>
+                    <td>MediaPipe Control Utils</td>
+                    <td id="control-utils-status">Not loaded</td>
+                </tr>
+                <tr>
+                    <td>MediaPipe Drawing Utils</td>
+                    <td id="drawing-utils-status">Not loaded</td>
+                </tr>
+                <tr>
+                    <td>MediaPipe Hands</td>
+                    <td id="hands-status">Not loaded</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>System Information</h2>
+            <table id="system-info">
+                <tr>
+                    <th>Information</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Browser</td>
+                    <td id="browser-info">Loading...</td>
+                </tr>
+                <tr>
+                    <td>Operating System</td>
+                    <td id="os-info">Loading...</td>
+                </tr>
+                <tr>
+                    <td>WebGL Support</td>
+                    <td id="webgl-info">Loading...</td>
+                </tr>
+                <tr>
+                    <td>JavaScript Enabled</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>Navigation Links</h2>
+            <div class="button-row">
+                <button onclick="window.location.href='index.html'">Go to Presentation</button>
+                <button onclick="window.location.href='test.html'">Go to Demo</button>
+                <button onclick="window.location.href='launch.html'">Go to Launcher</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Load MediaPipe libraries
+        function loadScript(src, id) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.id = id;
+                script.onload = () => {
+                    document.getElementById(id + '-status').textContent = 'Loaded';
+                    document.getElementById(id + '-status').style.color = 'green';
+                    resolve();
+                };
+                script.onerror = () => {
+                    document.getElementById(id + '-status').textContent = 'Failed to load';
+                    document.getElementById(id + '-status').style.color = 'red';
+                    reject(new Error(`Failed to load ${src}`));
+                };
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Camera handling
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        let mediaStream = null;
+        let handLandmarks = null;
+        let hands = null;
+        let camera = null;
+        
+        // Start camera
+        document.getElementById('start-camera').addEventListener('click', async () => {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: 320,
+                        height: 240,
+                        facingMode: 'user'
+                    } 
+                });
+                video.srcObject = mediaStream;
+                canvas.width = video.clientWidth;
+                canvas.height = video.clientHeight;
+                document.getElementById('camera-status').textContent = 'Camera status: Running';
+                document.getElementById('camera-status').style.color = 'green';
+            } catch (err) {
+                console.error("Error starting camera:", err);
+                document.getElementById('camera-status').textContent = 'Camera status: Error - ' + err.message;
+                document.getElementById('camera-status').style.color = 'red';
+            }
+        });
+        
+        // Stop camera
+        document.getElementById('stop-camera').addEventListener('click', () => {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                document.getElementById('camera-status').textContent = 'Camera status: Stopped';
+                document.getElementById('camera-status').style.color = 'orange';
+            }
+        });
+        
+        // Start hand tracking
+        document.getElementById('start-tracking').addEventListener('click', async () => {
+            if (!window.Hands) {
+                document.getElementById('tracking-status').textContent = 'Tracking status: Error - MediaPipe Hands not loaded';
+                document.getElementById('tracking-status').style.color = 'red';
+                return;
+            }
+            
+            if (!mediaStream) {
+                document.getElementById('tracking-status').textContent = 'Tracking status: Error - Camera not started';
+                document.getElementById('tracking-status').style.color = 'red';
+                return;
+            }
+            
+            try {
+                hands = new Hands({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+                    }
+                });
+                
+                hands.setOptions({
+                    maxNumHands: 1,
+                    modelComplexity: 1,
+                    minDetectionConfidence: 0.5,
+                    minTrackingConfidence: 0.5
+                });
+                
+                hands.onResults(onHandResults);
+                
+                camera = new Camera(video, {
+                    onFrame: async () => {
+                        await hands.send({image: video});
+                    },
+                    width: 320,
+                    height: 240
+                });
+                
+                await camera.start();
+                document.getElementById('tracking-status').textContent = 'Tracking status: Running';
+                document.getElementById('tracking-status').style.color = 'green';
+            } catch (err) {
+                console.error("Error starting hand tracking:", err);
+                document.getElementById('tracking-status').textContent = 'Tracking status: Error - ' + err.message;
+                document.getElementById('tracking-status').style.color = 'red';
+            }
+        });
+        
+        // Process hand tracking results
+        function onHandResults(results) {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // If we have a hand detected
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                handLandmarks = results.multiHandLandmarks[0];
+                
+                // Draw hand landmarks
+                ctx.fillStyle = '#00FF00';
+                ctx.strokeStyle = '#00FF00';
+                ctx.lineWidth = 2;
+                
+                // Draw landmarks
+                for (const landmark of handLandmarks) {
+                    const normalizedX = landmark.x * canvas.width;
+                    const normalizedY = landmark.y * canvas.height;
+                    
+                    ctx.beginPath();
+                    ctx.arc(normalizedX, normalizedY, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+                
+                // Draw connections
+                const connections = [
+                    [0, 1], [1, 2], [2, 3], [3, 4],
+                    [0, 5], [5, 6], [6, 7], [7, 8],
+                    [0, 9], [9, 10], [10, 11], [11, 12],
+                    [0, 13], [13, 14], [14, 15], [15, 16],
+                    [0, 17], [17, 18], [18, 19], [19, 20],
+                    [5, 9], [9, 13], [13, 17], [5, 17]
+                ];
+                
+                ctx.beginPath();
+                for (const connection of connections) {
+                    const start = handLandmarks[connection[0]];
+                    const end = handLandmarks[connection[1]];
+                    
+                    ctx.moveTo(start.x * canvas.width, start.y * canvas.height);
+                    ctx.lineTo(end.x * canvas.width, end.y * canvas.height);
+                }
+                ctx.stroke();
+                
+                // Update debug info
+                const indexTip = handLandmarks[8]; // Index finger tip
+                document.getElementById('debug-info').innerHTML = `
+                    Hand detected<br>
+                    Index finger tip position: X=${indexTip.x.toFixed(3)}, Y=${indexTip.y.toFixed(3)}, Z=${indexTip.z.toFixed(3)}<br>
+                    Number of landmarks: ${handLandmarks.length}
+                `;
+            } else {
+                handLandmarks = null;
+                document.getElementById('debug-info').textContent = 'No hand detected';
+            }
+        }
+        
+        // Stop hand tracking
+        document.getElementById('stop-tracking').addEventListener('click', () => {
+            if (camera) {
+                camera.stop();
+                camera = null;
+                hands = null;
+                handLandmarks = null;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                document.getElementById('tracking-status').textContent = 'Tracking status: Stopped';
+                document.getElementById('tracking-status').style.color = 'orange';
+                document.getElementById('debug-info').textContent = 'No hand detected';
+            }
+        });
+        
+        // Test gestures
+        document.getElementById('test-swipe-right').addEventListener('click', () => {
+            const gestureLog = document.getElementById('gesture-log');
+            gestureLog.innerHTML += '<div>Testing swipe right gesture...</div>';
+            
+            // Simulate swipe right
+            const event = new KeyboardEvent('keydown', {
+                key: 'ArrowRight',
+                code: 'ArrowRight',
+                keyCode: 39,
+                which: 39,
+                bubbles: true
+            });
+            document.dispatchEvent(event);
+            
+            gestureLog.innerHTML += '<div>✓ Swipe right event dispatched</div>';
+            gestureLog.scrollTop = gestureLog.scrollHeight;
+        });
+        
+        document.getElementById('test-swipe-left').addEventListener('click', () => {
+            const gestureLog = document.getElementById('gesture-log');
+            gestureLog.innerHTML += '<div>Testing swipe left gesture...</div>';
+            
+            // Simulate swipe left
+            const event = new KeyboardEvent('keydown', {
+                key: 'ArrowLeft',
+                code: 'ArrowLeft',
+                keyCode: 37,
+                which: 37,
+                bubbles: true
+            });
+            document.dispatchEvent(event);
+            
+            gestureLog.innerHTML += '<div>✓ Swipe left event dispatched</div>';
+            gestureLog.scrollTop = gestureLog.scrollHeight;
+        });
+        
+        // System information
+        document.getElementById('browser-info').textContent = navigator.userAgent;
+        document.getElementById('os-info').textContent = 
+            navigator.platform || 
+            ((navigator.userAgent.indexOf('Windows') !== -1) ? 'Windows' : 
+             (navigator.userAgent.indexOf('Mac') !== -1) ? 'MacOS' : 
+             (navigator.userAgent.indexOf('Linux') !== -1) ? 'Linux' : 'Unknown');
+        
+        // Check WebGL support
+        function checkWebGL() {
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl && gl instanceof WebGLRenderingContext) {
+                document.getElementById('webgl-info').textContent = 'Supported';
+                document.getElementById('webgl-info').style.color = 'green';
+            } else {
+                document.getElementById('webgl-info').textContent = 'Not supported';
+                document.getElementById('webgl-info').style.color = 'red';
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            checkWebGL();
+            
+            // Load MediaPipe libraries
+            Promise.all([
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js', 'camera-utils'),
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js', 'control-utils'),
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js', 'drawing-utils'),
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js', 'hands')
+            ]).then(() => {
+                console.log('All MediaPipe libraries loaded successfully');
+            }).catch(error => {
+                console.error('Error loading MediaPipe libraries:', error);
+            });
+        });
+    </script>
+</body>
+</html>
