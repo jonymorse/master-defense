@@ -272,6 +272,21 @@
       "videoDescription": "Final rendering of the construction site environment used for testing trained skills and computational thinking competencies."
     },
     {
+      "type": "video",
+      "title": "Construction Site Simulation",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 12"
+      },
+      "videoSrc": "videos/looped_output_level1.mp4",
+      "videoTitle": "High-Fidelity Construction Site Environment",
+      "videoDescription": "Final rendering of the construction site environment used for testing trained skills and computational thinking competencies."
+    },
+    {
       "type": "content",
       "title": "Acknowledgements",
       "header": {
