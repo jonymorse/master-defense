@@ -90,7 +90,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 55px; /* Fixed height */
+    height: 45px; /* Reduced height to save space */
 }
 
 .lsu-logo {
@@ -108,7 +108,7 @@ body, html {
 .lsu-footer {
     background-color: var(--lsu-purple);
     color: var(--light-text);
-    padding: 8px 40px;
+    padding: 6px 40px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -117,27 +117,28 @@ body, html {
     justify-content: space-between;
     align-items: center;
     font-size: 0.9rem;
-    height: 36px; /* Fixed height */
+    height: 30px; /* Reduced height to save space */
 }
 
 /* Content Styling */
 .slide-content {
-    margin-top: 75px;  /* Standardized top margin */
-    margin-bottom: 60px;  /* Standardized bottom margin */
+    margin-top: 65px;  /* Reduced top margin */
+    margin-bottom: 50px;  /* Reduced bottom margin */
     display: flex;
     flex: 1;
-    gap: 40px;  /* Standardized gap between columns */
+    gap: 30px;  /* Reduced gap to save space */
     width: 100%;  /* Ensure content takes full width */
+    overflow: visible; /* Remove scrolling */
 }
 
 .slide-title {
-    font-size: 3.4rem;  /* Increased font size */
+    font-size: 2.8rem;  /* Reduced font size to save space */
     color: var(--lsu-purple);
     font-weight: bold;
-    margin-bottom: 20px;  /* Standardized spacing */
-    border-bottom: 5px solid var(--lsu-gold);
-    padding-bottom: 10px;
-    margin-top: 70px;  /* Standardized spacing */
+    margin-bottom: 15px;  /* Reduced spacing */
+    border-bottom: 4px solid var(--lsu-gold);
+    padding-bottom: 8px;
+    margin-top: 50px;  /* Reduced spacing */
 }
 
 .slide-subtitle {
@@ -175,9 +176,9 @@ body, html {
 }
 
 .column li, .column p {
-    font-size: 1.6rem;  /* Increased text size for better readability */
-    margin-bottom: 18px;  /* More space between list items */
-    line-height: 1.5;  /* Increased line height for readability */
+    font-size: 1.5rem;  /* Slightly reduced text size to fit more content */
+    margin-bottom: 15px;  /* Reduced space between list items */
+    line-height: 1.4;  /* Reduced line height */
 }
 
 /* Custom LSU Bullet Points - standardized across all list types */
@@ -448,16 +449,16 @@ body, html {
 
 .full-width-list {
     columns: 2;
-    column-gap: 60px;  /* Increased gap between columns */
-    padding-left: 25px;  /* Standardized padding */
-    margin-top: 16px;  /* Increased margin */
+    column-gap: 40px;  /* Reduced gap between columns */
+    padding-left: 20px;  /* Reduced padding */
+    margin-top: 8px;  /* Reduced top margin */
     width: 100%;  /* Ensure list takes full width */
 }
 
 .full-width-list li {
-    font-size: 1.6rem;  /* Increased text size */
-    margin-bottom: 18px;  /* Increased spacing */
-    line-height: 1.5;  /* Consistent line height */
+    font-size: 1.3rem;  /* Further reduced text size */
+    margin-bottom: 6px;  /* Significantly reduced spacing */
+    line-height: 1.2;  /* Further reduced line height */
     break-inside: avoid;  /* Prevent list items from breaking across columns */
 }
 
@@ -493,13 +494,13 @@ body, html {
 }
 
 .content-section-title {
-    font-size: 2.1rem;  /* Increased font size */
+    font-size: 1.8rem;  /* Reduced font size */
     color: var(--lsu-purple);
     font-weight: bold;
-    margin-bottom: 20px;  /* Increased spacing */
+    margin-bottom: 10px;  /* Reduced spacing */
     margin-top: 0;  /* Start at the top for consistency */
-    border-left: 6px solid var(--lsu-gold);
-    padding-left: 14px;  /* Increased padding */
+    border-left: 4px solid var(--lsu-gold);
+    padding-left: 10px;  /* Reduced padding */
 }
 
 /* Add spacing between section titles */
@@ -539,7 +540,7 @@ body, html {
     opacity: 0;
     transition: opacity 0.8s ease;
     position: static; /* Keep in normal flow */
-    margin-bottom: 30px;
+    margin-bottom: 15px; /* Reduced spacing between sections */
     visibility: hidden; /* Hide but keep layout space */
 }
 
@@ -559,11 +560,7 @@ body, html {
 }
 
 .progress-indicator {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: auto;
-    padding: 20px 0;
+    display: none; /* Hide the progress indicator dots completely */
 }
 
 .dot {
@@ -588,27 +585,29 @@ body, html {
 }
 
 .progressive-slide .slide-content {
-    min-height: 550px; /* Increased height */
+    min-height: 650px; /* Adjusted height */
     display: flex;
     flex-direction: column;
-    padding-top: 10px; /* Add padding to the top */
+    padding-top: 0; /* Remove padding completely */
     justify-content: flex-start; /* Start content from the top */
+    overflow: visible; /* Remove scrolling */
+    margin-top: 45px; /* Reduced margin-top from 65px to 45px */
 }
 
 /* Styling for content sections */
 .progressive-content .content-section-title {
-    font-size: 2.2rem;  /* Increased font size */
+    font-size: 1.7rem;  /* Further reduced font size */
     color: var(--lsu-purple);
     font-weight: bold;
-    margin-bottom: 20px;  /* Increased spacing */
-    border-left: 6px solid var(--lsu-gold);
-    padding-left: 18px;  /* Increased padding */
-    margin-top: 36px;  /* Increased spacing */
+    margin-bottom: 4px;  /* Significantly reduced spacing */
+    border-left: 4px solid var(--lsu-gold);
+    padding-left: 8px;  /* Slightly reduced padding */
+    margin-top: 12px;  /* Significantly reduced spacing */
 }
 
 /* Specific positioning for the Problem section */
 .progressive-content .content-section:first-child {
-    margin-top: 36px; /* Add top margin to push down the first section */
+    margin-top: 0; /* Remove top margin completely */
 }
 
 .progressive-content .content-section:first-child .content-section-title {
@@ -619,25 +618,28 @@ body, html {
 .progressive-content .full-width-list {
     columns: 1;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px; /* Reduced bottom margin */
+    margin-top: 5px; /* Reduced top margin */
 }
 
 /* Static wrapper to prevent content jumping */
 .static-content-wrapper {
     position: relative;
-    min-height: 500px; /* Increased height to accommodate all content */
+    min-height: 650px; /* Adjusted height to accommodate all content */
     width: 100%;
-    padding-top: 20px; /* Add padding at the top */
+    padding-top: 10px; /* Reduced padding to save space */
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Align content from the top */
+    overflow: visible; /* Remove scrolling */
 }
 
 /* Custom styling for slide 2 */
 #slide-2 .content-container {
-    max-width: 90%;
-    margin: 20px auto 0; /* Add top margin */
-    padding-top: 10px; /* Add padding at the top */
+    max-width: 100%; /* Use full width */
+    margin: -50px auto 0; /* Negative top margin to move content upward */
+    padding-top: 0; /* Remove top padding completely */
+    overflow: visible; /* Remove scrolling */
 }
 
 /* For slide 2, remove column styling to ensure all content is visible */
@@ -646,10 +648,19 @@ body, html {
     padding-bottom: 5px;
 }
 
+/* Specific title adjustment for slide 2 */
+#slide-2 .slide-title {
+    margin-top: 35px; /* Reduced from 50px */
+    margin-bottom: 10px; /* Reduced from 15px */
+    padding-bottom: 5px; /* Reduced from 8px */
+}
+
 /* Make the "Key Research Questions" section stand out */
 .progressive-content .content-section:nth-child(3) .full-width-list li {
-    margin-bottom: 18px;
+    margin-bottom: 6px; /* Significantly reduced spacing between questions */
     font-weight: 500;
+    line-height: 1.2; /* Further reduced line height */
+    font-size: 1.3rem; /* Smaller font size to fit more content */
 }
 
 /* Fix for Meta Quest 3 image with checkered background */

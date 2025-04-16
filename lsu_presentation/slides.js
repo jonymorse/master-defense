@@ -72,7 +72,7 @@ function createTitleSlide(slide, index) {
         <div class="slide title-slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>Towards High-Fidelity VR Simulation of HRI Tasks</div>
             </div>
@@ -109,11 +109,7 @@ function createContentSlide(slide, index) {
                         </div>
                     `).join('')}
                 </div>
-                <div class="progress-indicator">
-                    ${sections.map((_, sectionIndex) => `
-                        <span class="dot ${sectionIndex === 0 ? 'active' : ''}" data-section="${sectionIndex}"></span>
-                    `).join('')}
-                </div>
+                <!-- Progress indicator removed -->
             </div>
         `;
         
@@ -122,7 +118,7 @@ function createContentSlide(slide, index) {
             <div class="slide progressive-slide" id="slide-${index + 1}">
                 <div class="lsu-header">
                     <div class="lsu-logo">
-                        <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                        <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                     </div>
                     <div>${slide.header.text}</div>
                 </div>
@@ -195,7 +191,7 @@ function createContentSlide(slide, index) {
         <div class="slide ${index === 1 ? 'progressive-slide' : ''}" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -259,7 +255,7 @@ function createContentWithImageSlide(slide, index) {
         <div class="slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -320,7 +316,7 @@ function createContentWithImageGridSlide(slide, index) {
         <div class="slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -347,7 +343,7 @@ function createTwoColumnSlide(slide, index) {
         <div class="slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -382,7 +378,7 @@ function createTwoColumnWithImageSlide(slide, index) {
         <div class="slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -421,7 +417,7 @@ function createTwoColumnWithImagesSlide(slide, index) {
         <div class="slide" id="slide-${index + 1}">
             <div class="lsu-header">
                 <div class="lsu-logo">
-                    <img src="../PNG Files/LSUElectrical_Gold_RGB.png" alt="LSU Electrical Engineering Logo">
+                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
                 </div>
                 <div>${slide.header.text}</div>
             </div>
@@ -500,15 +496,7 @@ function initializeNavigation() {
                 }
             });
             
-            // Update dot indicators
-            const dots = slides[index].querySelectorAll('.dot');
-            dots.forEach((dot, idx) => {
-                if (idx === 0) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
+            // Dot indicators have been removed
         }
     }
     
@@ -538,26 +526,14 @@ function initializeNavigation() {
             }
         });
         
-        // Update dots
-        dots.forEach((dot, idx) => {
-            if (idx === sectionIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
+        // Dots have been removed, no need to update them
         
         currentSection = sectionIndex;
     }
     
     // Click navigation (left side = previous, right side = next)
     slideContainer.addEventListener('click', function(e) {
-        // Ignore clicks on dots
-        if (e.target.classList.contains('dot')) {
-            const sectionIndex = parseInt(e.target.getAttribute('data-section'));
-            showSection(sectionIndex);
-            return;
-        }
+        // Dot indicators have been removed
         
         const containerWidth = slideContainer.offsetWidth;
         const clickX = e.clientX;

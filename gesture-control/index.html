@@ -4,50 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LSU Presentation with Gesture Control</title>
-    <link rel="stylesheet" href="../lsu_presentation/lsu-style.css">
+    <!-- Load the original presentation styles -->
+    <link rel="stylesheet" href="/lsu_presentation/lsu-style.css">
     <style>
-        /* Additional styles for gesture control indicators */
+        /* Gesture control overlay styles */
+        .gesture-overlay {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            width: 180px;
+            height: 135px;
+            border: 2px solid rgba(70, 29, 124, 0.7); /* LSU purple */
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .gesture-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1); /* Mirror the video */
+        }
+
+        .gesture-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+        }
+
+        .gesture-hint {
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            padding: 2px;
+            background-color: rgba(70, 29, 124, 0.5);
+            z-index: 1002;
+        }
+
         .gesture-indicator {
             position: fixed;
             left: 20px;
             bottom: 20px;
             padding: 10px;
-            background-color: rgba(70, 29, 124, 0.7); /* LSU purple with transparency */
+            background-color: rgba(70, 29, 124, 0.7);
             color: white;
             border-radius: 5px;
             font-family: Arial, sans-serif;
             z-index: 1002;
             display: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(253, 208, 35, 0.7); /* LSU gold border */
+            border: 2px solid rgba(253, 208, 35, 0.7);
             transition: all 0.3s ease;
         }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .webcam-container {
-            position: fixed;
-            right: 10px;
-            bottom: 10px;
-            width: 160px;
-            height: 120px;
-            border: 2px solid rgba(70, 29, 124, 0.7); /* LSU purple */
-            border-radius: 5px;
-            overflow: hidden;
-            z-index: 1000;
-        }
-        
+
         /* Toggle button for gesture control */
         .gesture-toggle {
             position: fixed;
             right: 10px;
             top: 10px;
             padding: 10px 15px;
-            background-color: rgba(70, 29, 124, 0.7); /* LSU purple */
+            background-color: rgba(70, 29, 124, 0.7);
             color: white;
             border: none;
             border-radius: 5px;
@@ -55,96 +80,596 @@
             z-index: 1003;
             font-family: Arial, sans-serif;
         }
-        
+
         .gesture-toggle:hover {
             background-color: rgba(70, 29, 124, 1);
         }
+
+        /* Audience view button */
+        .audience-toggle {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            padding: 10px 15px;
+            background-color: rgba(70, 29, 124, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1003;
+            font-family: Arial, sans-serif;
+        }
+
+        .audience-toggle:hover {
+            background-color: rgba(70, 29, 124, 1);
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            position: fixed;
+            left: 230px;
+            top: 10px;
+            padding: 10px 15px;
+            background-color: rgba(70, 29, 124, 0.3);
+            color: white;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1003;
+            font-size: 14px;
+        }
+
+        /* Video fix for slide 11 */
+        .video-fix-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .video-fix-overlay video {
+            max-width: 90%;
+            max-height: 80vh;
+        }
+        
+        .video-fix-overlay button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #FDD023;
+            color: #461D7C;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
+    <!-- Load Socket.io client library -->
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <div class="slide-container">
-        <!-- Slides will be dynamically inserted here by JavaScript -->
+    <!-- This is just a wrapper for the original presentation -->
+    <iframe id="presentation-frame" src="/lsu_presentation/index.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+
+    <!-- Gesture control overlay (initially hidden) -->
+    <div class="gesture-overlay" id="gesture-overlay" style="display: none;">
+        <video id="gesture-video" class="gesture-video" playsinline></video>
+        <canvas id="gesture-canvas" class="gesture-canvas"></canvas>
+        <div class="gesture-hint">Move hand across center</div>
     </div>
 
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-    
-    <!-- Gesture control toggle button -->
-    <button class="gesture-toggle" id="gesture-toggle">Enable Gesture Control</button>
-    
-    <!-- Gesture indicator element -->
+    <!-- Gesture indicator -->
     <div class="gesture-indicator" id="gesture-indicator"></div>
 
-    <!-- Load the original presentation scripts with path modification -->
+    <!-- Status indicator -->
+    <div class="status-indicator" id="status-indicator">Presenter View</div>
+
+    <!-- Toggle buttons -->
+    <button class="gesture-toggle" id="gesture-toggle">Enable Gesture Control</button>
+    <button class="audience-toggle" id="audience-toggle">Open Audience View</button>
+
+    <!-- Video fix overlay for slide 11 -->
+    <div class="video-fix-overlay" id="video-fix-overlay">
+        <video controls autoplay loop id="fixed-video">
+            <source src="/lsu_presentation/videos/output_clean.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="close-video-fix">Return to Presentation</button>
+    </div>
+
     <script>
-        // Temporarily override fetch to modify the URL for content.json and SVG diagrams
-        const originalFetch = window.fetch;
-        window.fetch = function(url, options) {
-            if (url === 'content.json') {
-                url = '../lsu_presentation/content.json';
-            }
-            // Check if this is an SVG file from diagrams folder
-            if (url.startsWith('diagrams/') && url.endsWith('.svg')) {
-                url = '../lsu_presentation/' + url;
-            }
-            return originalFetch(url, options);
+        // Set up socket connection
+        const socket = io();
+        
+        // Reference to the iframe and its content
+        const presentationFrame = document.getElementById('presentation-frame');
+        let presentationWindow = null;
+        
+        // Other UI elements
+        const gestureOverlay = document.getElementById('gesture-overlay');
+        const gestureToggle = document.getElementById('gesture-toggle');
+        const audienceToggle = document.getElementById('audience-toggle');
+        const statusIndicator = document.getElementById('status-indicator');
+        const videoFixOverlay = document.getElementById('video-fix-overlay');
+        const fixedVideo = document.getElementById('fixed-video');
+        const closeVideoFix = document.getElementById('close-video-fix');
+        
+        // Wait for iframe to load
+        presentationFrame.onload = function() {
+            presentationWindow = presentationFrame.contentWindow;
+            console.log('Presentation frame loaded');
+            
+            // Tell server we're the presenter
+            socket.emit('presenterConnected');
+            
+            // Inject slide monitoring
+            injectSlideMonitoring();
+            
+            // Monitor when slide 11 becomes active
+            monitorSlide11();
         };
         
-        // Fix image and diagram paths after slides are loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Wait for slides to be created
-            setTimeout(function() {
-                // Fix all image paths to point to the correct location
-                const images = document.querySelectorAll('img');
-                images.forEach(function(img) {
-                    if (img.src.includes('PNG Files')) {
-                        // Fix the path to use the correct directory
-                        img.src = img.src.replace(/PNG\ Files/, '../PNG Files');
+        // Close video fix overlay
+        closeVideoFix.addEventListener('click', function() {
+            videoFixOverlay.style.display = 'none';
+            fixedVideo.pause();
+        });
+        
+        // Set up audience view button
+        audienceToggle.addEventListener('click', function() {
+            // Open audience view in new window/tab
+            window.open('/audience', 'lsu_audience', 'width=1024,height=768');
+        });
+        
+        // Function to get current slide index from the iframe
+        function getCurrentSlideIndex() {
+            try {
+                // Find all slides in the presentation
+                const slides = presentationWindow.document.querySelectorAll('.slide');
+                // Find which one is active
+                for (let i = 0; i < slides.length; i++) {
+                    if (slides[i].classList.contains('active')) {
+                        return i;
                     }
-                    if (img.src.includes('images/')) {
-                        // Fix the path to use the correct directory
-                        img.src = img.src.replace(/images\//, '../lsu_presentation/images/');
+                }
+                return 0;
+            } catch (error) {
+                console.error('Error getting current slide index:', error);
+                return 0;
+            }
+        }
+        
+        // Monitor for slide 11 becoming active
+        function monitorSlide11() {
+            // Check every second if slide 11 is active
+            setInterval(function() {
+                if (!presentationWindow) return;
+                
+                try {
+                    const slide11 = presentationWindow.document.getElementById('slide-11');
+                    if (slide11 && slide11.classList.contains('active')) {
+                        console.log('Slide 11 is active - showing video fix');
+                        videoFixOverlay.style.display = 'flex';
+                        fixedVideo.play().catch(e => console.log('Autoplay prevented:', e));
+                    } else if (videoFixOverlay.style.display === 'flex') {
+                        // Hide the overlay if we've moved away from slide 11
+                        videoFixOverlay.style.display = 'none';
+                        fixedVideo.pause();
                     }
-                    if (img.src.includes('diagrams/')) {
-                        // Fix the path for diagram SVGs
-                        img.src = img.src.replace(/diagrams\//, '../lsu_presentation/diagrams/');
+                } catch (error) {
+                    console.error('Error checking for slide 11:', error);
+                }
+            }, 1000);
+        }
+        
+        // Inject slide change monitoring into the iframe
+        function injectSlideMonitoring() {
+            if (presentationWindow) {
+                try {
+                    // Create a script element to inject
+                    const script = document.createElement('script');
+                    script.textContent = `
+                        // Monitor slide changes
+                        (function() {
+                            // Override the showSlide function if it exists
+                            if (typeof showSlide === 'function') {
+                                const originalShowSlide = showSlide;
+                                showSlide = function(index) {
+                                    // Call original function
+                                    originalShowSlide(index);
+                                    
+                                    // Notify parent window
+                                    window.parent.postMessage({
+                                        type: 'slideChange',
+                                        slideIndex: index
+                                    }, '*');
+                                };
+                                console.log('Slide monitoring injected successfully');
+                            } else {
+                                // Monitor slides using an interval
+                                let lastIndex = 0;
+                                setInterval(function() {
+                                    const slides = document.querySelectorAll('.slide');
+                                    for (let i = 0; i < slides.length; i++) {
+                                        if (slides[i].classList.contains('active') && i !== lastIndex) {
+                                            lastIndex = i;
+                                            // Notify parent window
+                                            window.parent.postMessage({
+                                                type: 'slideChange',
+                                                slideIndex: i
+                                            }, '*');
+                                            break;
+                                        }
+                                    }
+                                }, 500);
+                                console.log('Slide monitoring interval started');
+                            }
+                        })();
+                    `;
+                    
+                    // Inject the script into the iframe
+                    presentationWindow.document.body.appendChild(script);
+                    console.log('Injected slide monitoring script');
+                } catch (error) {
+                    console.error('Error injecting slide monitoring:', error);
+                }
+            }
+        }
+        
+        // Listen for slide changes in the presentation
+        window.addEventListener('message', function(event) {
+            // Check if this is a slide change event from the iframe
+            if (event.data && event.data.type === 'slideChange') {
+                console.log('Slide changed to:', event.data.slideIndex + 1);
+                // Send to server to sync with audience
+                socket.emit('changeSlide', {
+                    slideIndex: event.data.slideIndex
+                });
+                
+                // Check for slide 11 to handle video
+                if (event.data.slideIndex === 10) { // 0-based index
+                    videoFixOverlay.style.display = 'flex';
+                    fixedVideo.play().catch(e => console.log('Autoplay prevented:', e));
+                    
+                    // Sync video with audience
+                    socket.emit('videoEvent', {
+                        action: 'play',
+                        currentTime: 0
+                    });
+                } else {
+                    videoFixOverlay.style.display = 'none';
+                    fixedVideo.pause();
+                }
+            }
+        });
+        
+        // Navigate slides in the presentation iframe
+        function navigateSlide(direction) {
+            if (!presentationWindow) return;
+            
+            try {
+                // Create event for arrow key press
+                const keyCode = direction === 'next' ? 39 : 37; // 39 = right, 37 = left
+                const keyEvent = new KeyboardEvent('keydown', {
+                    key: direction === 'next' ? 'ArrowRight' : 'ArrowLeft',
+                    code: direction === 'next' ? 'ArrowRight' : 'ArrowLeft',
+                    keyCode: keyCode,
+                    which: keyCode,
+                    bubbles: true
+                });
+                
+                // Dispatch event to iframe document
+                presentationWindow.document.dispatchEvent(keyEvent);
+                console.log('Navigated to', direction, 'slide');
+            } catch (error) {
+                console.error('Error navigating slide:', error);
+            }
+        }
+        
+        // Initialize gesture control
+        gestureToggle.addEventListener('click', function() {
+            if (gestureToggle.textContent === 'Enable Gesture Control') {
+                // Initialize
+                initGestureControl();
+                gestureToggle.textContent = 'Disable Gesture Control';
+                gestureOverlay.style.display = 'block';
+            } else {
+                // Disable
+                disableGestureControl();
+                gestureToggle.textContent = 'Enable Gesture Control';
+                gestureOverlay.style.display = 'none';
+            }
+        });
+        
+        // Gesture control variables
+        const config = {
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5,
+            swipeThreshold: 0.05,
+            swipeTimeout: 500,
+            debug: false
+        };
+        
+        let handLandmarks = null;
+        let lastHandX = 0;
+        let lastHandY = 0;
+        let lastHandTime = 0;
+        let gestureInProgress = false;
+        let gestureStartTime = 0;
+        let gestureDirection = null;
+        let videoElement = null;
+        let canvasElement = null;
+        let canvasCtx = null;
+        let gestureIndicator = null;
+        let startedInLeftHalf = null;
+        
+        // Initialize gesture control
+        function initGestureControl() {
+            console.log('Initializing gesture control...');
+            
+            // Set up video and canvas elements
+            videoElement = document.getElementById('gesture-video');
+            canvasElement = document.getElementById('gesture-canvas');
+            canvasCtx = canvasElement.getContext('2d');
+            gestureIndicator = document.getElementById('gesture-indicator');
+            
+            // Load MediaPipe libraries
+            Promise.all([
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js'),
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js'),
+                loadScript('https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js')
+            ]).then(() => {
+                // Initialize hands
+                const hands = new Hands({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
                     }
                 });
                 
-                // Also fix any SVG objects that might be used for diagrams
-                const svgObjects = document.querySelectorAll('object[type="image/svg+xml"]');
-                svgObjects.forEach(function(obj) {
-                    if (obj.data && obj.data.includes('diagrams/')) {
-                        // Fix the path to use the correct directory
-                        obj.data = obj.data.replace(/diagrams\//, '../lsu_presentation/diagrams/');
-                    }
+                hands.setOptions({
+                    maxNumHands: 1,
+                    modelComplexity: 1,
+                    minDetectionConfidence: config.minDetectionConfidence,
+                    minTrackingConfidence: config.minTrackingConfidence
                 });
-            }, 500); // Give it time to load slides
-        });
-    </script>
-    <script src="../lsu_presentation/slides.js"></script>
-    
-    <!-- Load our gesture control script -->
-    <script src="gesture-control.js"></script>
-    
-    <script>
-        // Add toggle functionality for gesture control
-        document.getElementById('gesture-toggle').addEventListener('click', function() {
-            const button = document.getElementById('gesture-toggle');
+                
+                hands.onResults(onHandResults);
+                
+                // Set up camera
+                const camera = new Camera(videoElement, {
+                    onFrame: async () => {
+                        await hands.send({image: videoElement});
+                    },
+                    width: 320,
+                    height: 240
+                });
+                
+                camera.start()
+                    .then(() => {
+                        console.log('Camera started successfully');
+                        canvasElement.width = videoElement.videoWidth;
+                        canvasElement.height = videoElement.videoHeight;
+                    })
+                    .catch(error => {
+                        console.error('Error starting camera:', error);
+                        alert('Could not access camera. Please check permissions and try again.');
+                    });
+            }).catch(error => {
+                console.error('Error loading MediaPipe libraries:', error);
+                alert('Error loading gesture recognition libraries. Please check your internet connection and try again.');
+            });
+        }
+        
+        // Disable gesture control
+        function disableGestureControl() {
+            // Stop video stream if it exists
+            if (videoElement && videoElement.srcObject) {
+                const tracks = videoElement.srcObject.getTracks();
+                tracks.forEach(track => track.stop());
+                videoElement.srcObject = null;
+            }
             
-            if (button.textContent === 'Enable Gesture Control') {
-                // Initialize gesture control
-                if (typeof initGestureControl === 'function') {
-                    initGestureControl();
-                    button.textContent = 'Disable Gesture Control';
-                } else {
-                    alert('Gesture control script not loaded correctly. Please refresh the page.');
-                }
+            // Clear canvas
+            if (canvasCtx) {
+                canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            }
+        }
+        
+        // Load script helper
+        function loadScript(url) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.onload = resolve;
+                script.onerror = reject;
+                script.src = url;
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Process hand tracking results
+        function onHandResults(results) {
+            // Clear canvas
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            
+            // If we have a hand detected
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                handLandmarks = results.multiHandLandmarks[0];
+                
+                // Draw hand landmarks
+                drawHandLandmarks();
+                
+                // Process gestures
+                processGestures();
             } else {
-                // Reload the page to disable gesture control
-                // This is a simple approach; a more sophisticated one would properly clean up resources
-                location.reload();
+                handLandmarks = null;
+                resetGestureState();
+            }
+        }
+        
+        // Draw hand landmarks
+        function drawHandLandmarks() {
+            if (!handLandmarks) return;
+            
+            // Draw screen divider
+            canvasCtx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            canvasCtx.fillRect(canvasElement.width / 2 - 1, 0, 2, canvasElement.height);
+            
+            // Draw which half is active
+            const isInLeftHalf = handLandmarks[8].x < 0.5;
+            if (isInLeftHalf) {
+                canvasCtx.fillStyle = 'rgba(253, 208, 35, 0.1)';
+                canvasCtx.fillRect(0, 0, canvasElement.width / 2, canvasElement.height);
+            } else {
+                canvasCtx.fillStyle = 'rgba(253, 208, 35, 0.1)';
+                canvasCtx.fillRect(canvasElement.width / 2, 0, canvasElement.width / 2, canvasElement.height);
+            }
+            
+            // Draw hand connections
+            canvasCtx.fillStyle = '#00FF00';
+            canvasCtx.strokeStyle = '#00FF00';
+            canvasCtx.lineWidth = 2;
+            
+            // Draw landmarks
+            for (const landmark of handLandmarks) {
+                const normalizedX = landmark.x * canvasElement.width;
+                const normalizedY = landmark.y * canvasElement.height;
+                
+                canvasCtx.beginPath();
+                canvasCtx.arc(normalizedX, normalizedY, 5, 0, 2 * Math.PI);
+                canvasCtx.fill();
+            }
+            
+            // Draw connections
+            canvasCtx.beginPath();
+            for (const connection of HAND_CONNECTIONS) {
+                canvasCtx.moveTo(
+                    handLandmarks[connection[0]].x * canvasElement.width,
+                    handLandmarks[connection[0]].y * canvasElement.height
+                );
+                canvasCtx.lineTo(
+                    handLandmarks[connection[1]].x * canvasElement.width,
+                    handLandmarks[connection[1]].y * canvasElement.height
+                );
+            }
+            canvasCtx.stroke();
+            
+            // Highlight index finger tip
+            const indexTip = handLandmarks[8];
+            canvasCtx.fillStyle = '#FF0000';
+            canvasCtx.beginPath();
+            canvasCtx.arc(
+                indexTip.x * canvasElement.width,
+                indexTip.y * canvasElement.height,
+                8, 0, 2 * Math.PI
+            );
+            canvasCtx.fill();
+        }
+        
+        // Process hand gestures
+        function processGestures() {
+            if (!handLandmarks) return;
+            
+            // Get index finger tip position
+            const indexTip = handLandmarks[8];
+            const currentX = indexTip.x;
+            const currentY = indexTip.y;
+            const currentTime = Date.now();
+            
+            // First-time detection
+            if (!gestureInProgress) {
+                gestureInProgress = true;
+                gestureStartTime = currentTime;
+                lastHandX = currentX;
+                lastHandY = currentY;
+                lastHandTime = currentTime;
+                
+                // Remember which half of the screen the hand started in
+                startedInLeftHalf = currentX < 0.5;
+                return;
+            }
+            
+            // Calculate time since last update
+            const deltaTime = currentTime - lastHandTime;
+            
+            // Detect crossing from one side of screen to another
+            const currentlyInLeftHalf = currentX < 0.5;
+            const wasInLeftHalf = lastHandX < 0.5;
+            
+            // Check if hand crossed from left to right half
+            if (!currentlyInLeftHalf && wasInLeftHalf) {
+                // Hand moved from left half to right half - Right swipe
+                gestureDirection = 'right';
+                showGestureIndicator('➡️ Next Slide');
+                navigateSlide('next');
+                resetGestureState();
+            }
+            // Check if hand crossed from right to left half
+            else if (currentlyInLeftHalf && !wasInLeftHalf) {
+                // Hand moved from right half to left half - Left swipe
+                gestureDirection = 'left';
+                showGestureIndicator('⬅️ Previous Slide');
+                navigateSlide('prev');
+                resetGestureState();
+            }
+            
+            // Update last position and time
+            lastHandX = currentX;
+            lastHandY = currentY;
+            lastHandTime = currentTime;
+            
+            // Check if gesture has timed out
+            if (currentTime - gestureStartTime > 2000) {
+                resetGestureState();
+            }
+        }
+        
+        // Reset gesture tracking state
+        function resetGestureState() {
+            gestureInProgress = false;
+            gestureDirection = null;
+            startedInLeftHalf = null;
+        }
+        
+        // Show gesture indicator with feedback
+        function showGestureIndicator(text) {
+            gestureIndicator.textContent = text;
+            gestureIndicator.style.display = 'block';
+            gestureIndicator.style.animation = 'none';
+            
+            setTimeout(() => {
+                gestureIndicator.style.animation = 'pulse 0.5s';
+            }, 10);
+            
+            // Hide after 2 seconds
+            setTimeout(() => {
+                gestureIndicator.style.display = 'none';
+            }, 2000);
+        }
+        
+        // Hand connections for drawing
+        const HAND_CONNECTIONS = [
+            [0, 1], [1, 2], [2, 3], [3, 4],
+            [0, 5], [5, 6], [6, 7], [7, 8],
+            [0, 9], [9, 10], [10, 11], [11, 12],
+            [0, 13], [13, 14], [14, 15], [15, 16],
+            [0, 17], [17, 18], [18, 19], [19, 20],
+            [5, 9], [9, 13], [13, 17], [5, 17]
+        ];
+        
+        // Listen for updates from server
+        socket.on('presenterStatus', function(data) {
+            if (data.connected) {
+                statusIndicator.textContent = 'Presenter Online';
+                statusIndicator.style.backgroundColor = 'rgba(0, 128, 0, 0.3)';
+            } else {
+                statusIndicator.textContent = 'Presenter Offline';
+                statusIndicator.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
             }
         });
     </script>

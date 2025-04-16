@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSU Presentation - Audience View</title>
+    <link rel="stylesheet" href="/lsu_presentation/lsu-style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        /* Audience view styles */
+        body::after {
+            content: "Audience View";
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(70, 29, 124, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Fullscreen button */
+        .fullscreen-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 15px;
+            background-color: rgba(70, 29, 124, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1003;
+            font-family: Arial, sans-serif;
+        }
+
+        .fullscreen-toggle:hover {
+            background-color: rgba(70, 29, 124, 1);
+        }
+
+        /* Fix for video on slide 11 */
+        .video-fix-overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .video-fix-overlay video {
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        /* Hide audience close button (not needed) */
+        /* .video-fix-overlay button { ... } */
+    </style>
+</head>
+<body>
+    <iframe id="presentation-frame" src="/lsu_presentation/index.html" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
+
+    <button class="fullscreen-toggle" id="fullscreen-toggle">Fullscreen</button>
+
+    <div class="video-fix-overlay" id="video-fix-overlay">
+        <video controls loop id="fixed-video">
+            <source src="/lsu_presentation/videos/output_clean.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        </div>
+
+    <script>
+        // Set up Socket.IO connection
+        const socket = io();
+
+        // Set up BroadcastChannel (for local sync if needed)
+        const presentationChannel = new BroadcastChannel('presentation-sync');
+
+        // References
+        const presentationFrame = document.getElementById('presentation-frame');
+        const fullscreenToggle = document.getElementById('fullscreen-toggle');
+        const videoFixOverlay = document.getElementById('video-fix-overlay');
+        const fixedVideo = document.getElementById('fixed-video');
+        let presentationWindow = null;
+        let currentSlideIndex = 0; // Keep track locally
+
+        // Wait for iframe to load
+        presentationFrame.onload = function() {
+            presentationWindow = presentationFrame.contentWindow;
+            console.log('Audience: Presentation frame loaded');
+
+            // Optional: Request initial state from server after iframe loads
+            // socket.emit('requestInitialState'); // You'd need to handle this on the server
+        };
+
+        // --- Event Listeners ---
+
+        // Listen for slide changes from Socket.IO (Primary)
+        socket.on('slideChange', (data) => {
+            console.log('Audience: Received slideChange via Socket.IO:', data.slideIndex + 1);
+            handleSlideChange(data.slideIndex);
+        });
+
+        // Listen for video events from Socket.IO (Primary)
+        socket.on('videoEvent', (data) => {
+            console.log('Audience: Received videoEvent via Socket.IO:', data);
+            handleVideoEvent(data);
+        });
+
+        // Listen for slide changes from BroadcastChannel (Secondary/Local)
+        presentationChannel.onmessage = function(event) {
+            if (!presentationWindow) return;
+            const message = event.data;
+
+            if (message.action === 'changeSlide' && typeof message.slideIndex === 'number') {
+                console.log('Audience: Received slideChange via BroadcastChannel:', message.slideIndex + 1);
+                handleSlideChange(message.slideIndex);
+            } else if (message.action === 'videoEvent') {
+                 console.log('Audience: Received videoEvent via BroadcastChannel:', message.data);
+                 handleVideoEvent(message.data);
+            }
+        };
+
+        // --- Core Logic Functions ---
+
+        // Handles updating the slide in the iframe and video overlay
+        function handleSlideChange(targetIndex) {
+            if (!presentationWindow || targetIndex === currentSlideIndex) {
+                 // No need to change if window not ready or already on the slide
+                return;
+            }
+            console.log(`Audience: Handling slide change request to index ${targetIndex}`);
+            currentSlideIndex = targetIndex; // Update local state
+            navigateToSlide(targetIndex);
+
+            // Handle video overlay visibility based on slide index
+            if (targetIndex === 10) { // Slide 11 (0-based index)
+                // Video should be controlled by videoEvent, but ensure overlay is ready
+                 if (videoFixOverlay.style.display !== 'flex') {
+                     console.log("Audience: Preparing video overlay for slide 11.");
+                     videoFixOverlay.style.display = 'flex';
+                     // Don't auto-play here, wait for videoEvent
+                     fixedVideo.pause();
+                     fixedVideo.currentTime = 0;
+                 }
+            } else {
+                if (videoFixOverlay.style.display === 'flex') {
+                    console.log("Audience: Hiding video overlay as we are not on slide 11.");
+                    videoFixOverlay.style.display = 'none';
+                    fixedVideo.pause();
+                }
+            }
+        }
+
+        // Handles video playback synchronization
+        function handleVideoEvent(data) {
+             if (currentSlideIndex !== 10) {
+                console.warn("Audience: Received video event but not on slide 11. Ignoring.");
+                return; // Only handle video events when on slide 11
+             }
+
+             videoFixOverlay.style.display = 'flex'; // Ensure overlay is visible
+
+             console.log(`Audience: Handling video action: ${data.action}`);
+             if (data.action === 'play') {
+                if (typeof data.currentTime === 'number') {
+                   fixedVideo.currentTime = data.currentTime;
+                }
+                fixedVideo.play().catch(e => console.log('Audience: Autoplay prevented:', e));
+             } else if (data.action === 'pause') {
+                fixedVideo.pause();
+                if (typeof data.currentTime === 'number') {
+                   fixedVideo.currentTime = data.currentTime;
+                }
+             }
+             // Add other actions like 'seek' if needed
+        }
+
+
+        // Navigate iframe to a specific slide index
+        async function navigateToSlide(targetIndex) {
+             if (!presentationWindow) return;
+             console.log(`Audience: Navigating iframe to slide ${targetIndex + 1}`);
+            try {
+                // Preferred method: Use showSlide function if available in iframe
+                if (typeof presentationWindow.showSlide === 'function') {
+                    presentationWindow.showSlide(targetIndex);
+                    console.log('Audience: Used showSlide function.');
+                    return;
+                }
+
+                // Fallback: Simulate keyboard navigation
+                console.warn('Audience: showSlide function not found in iframe. Using keyboard simulation fallback.');
+                const actualCurrentIndex = getCurrentSlideIndexFromDOM(); // Get index from DOM
+                const delta = targetIndex - actualCurrentIndex;
+
+                if (delta === 0) return; // Already there
+
+                const key = delta > 0 ? 'ArrowRight' : 'ArrowLeft';
+                const keyCode = delta > 0 ? 39 : 37;
+                const count = Math.abs(delta);
+
+                for (let i = 0; i < count; i++) {
+                    const keyEvent = new KeyboardEvent('keydown', {
+                        key: key, code: key, keyCode: keyCode, which: keyCode, bubbles: true
+                    });
+                    presentationWindow.document.dispatchEvent(keyEvent);
+                     // Add a small delay between simulated key presses if needed
+                     if (i < count - 1) await sleep(50);
+                }
+                console.log(`Audience: Simulated ${count} '${key}' key presses.`);
+
+            } catch (error) {
+                console.error('Audience: Error navigating slide:', error);
+            }
+        }
+
+        // Helper to get current slide index directly from iframe DOM
+        function getCurrentSlideIndexFromDOM() {
+            if (!presentationWindow) return 0;
+            try {
+                const slides = presentationWindow.document.querySelectorAll('.slide');
+                for (let i = 0; i < slides.length; i++) {
+                    if (slides[i].classList.contains('active')) {
+                        return i;
+                    }
+                }
+                return 0; // Default to first slide if none found active
+            } catch (error) {
+                console.error('Audience: Error getting current slide index from DOM:', error);
+                return 0;
+            }
+        }
+
+        // Helper for delays in async functions
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+
+        // --- Fullscreen Functionality ---
+        fullscreenToggle.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+                    .then(() => { fullscreenToggle.textContent = 'Exit Fullscreen'; })
+                    .catch(err => { console.error('Could not enter fullscreen:', err); });
+            } else {
+                document.exitFullscreen()
+                    .then(() => { fullscreenToggle.textContent = 'Fullscreen'; })
+                    .catch(err => { console.error('Could not exit fullscreen:', err); });
+            }
+        });
+
+        document.addEventListener('fullscreenchange', function() {
+            fullscreenToggle.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
+        });
+
+    </script>
+</body>
+</html>
