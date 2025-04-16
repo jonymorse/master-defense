@@ -257,6 +257,21 @@
       }
     },
     {
+      "type": "video",
+      "title": "Construction Site Simulation",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 11"
+      },
+      "videoSrc": "videos/output_jpeg.mp4",
+      "videoTitle": "High-Fidelity Construction Site Environment",
+      "videoDescription": "Final rendering of the construction site environment used for testing trained skills and computational thinking competencies."
+    },
+    {
       "type": "content",
       "title": "Acknowledgements",
       "header": {
@@ -265,7 +280,7 @@
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 11"
+        "right": "Page 12"
       },
       "content": "acknowledgement",
       "acknowledgementText": [

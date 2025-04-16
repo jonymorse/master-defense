@@ -656,3 +656,152 @@ body, html {
 img[src*="metaquest3"] {
     background-color: white;
 }
+
+/* Video Slide Styling */
+/* Regular video slide */
+.video-slide .slide-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container {
+    width: 85%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-container video {
+    width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    border: 2px solid var(--lsu-purple);
+    background-color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Fullscreen video slide */
+.fullscreen-video-slide {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.fullscreen-video-slide .lsu-header,
+.fullscreen-video-slide .lsu-footer {
+    z-index: 10;
+    position: absolute;
+}
+
+.fullscreen-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullscreen-video-container video {
+    width: 100%;
+    height: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    z-index: 5;
+}
+
+.video-title-overlay {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 3.4rem;
+    color: var(--lsu-gold);
+    font-weight: bold;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    background-color: rgba(70, 29, 124, 0.7);
+    padding: 10px 0;
+}
+
+.video-overlay-info {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgba(70, 29, 124, 0.7);
+    z-index: 10;
+}
+
+.video-title {
+    font-size: 1.6rem;
+    color: var(--lsu-gold);
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.video-description {
+    font-size: 1.3rem;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* Video controls visibility */
+.fullscreen-video-container video::-webkit-media-controls {
+    opacity: 0.8;
+}
+
+.fullscreen-video-container video::-webkit-media-controls-panel {
+    background-color: rgba(70, 29, 124, 0.5);
+}
+
+/* Pure Video Slide - No overlays or headers/footers */
+.pure-video-slide {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.pure-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pure-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Hide controls since we're auto-playing */
+    outline: none;
+}
+
+/* Hide video controls for auto-playing videos */
+.pure-video-container video::-webkit-media-controls {
+    display: none;
+}
+
+/* Hide all standard slide elements for pure video slides */
+.pure-video-slide .lsu-header,
+.pure-video-slide .lsu-footer,
+.pure-video-slide .slide-title,
+.pure-video-slide .slide-content {
+    display: none;
+}

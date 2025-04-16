@@ -45,6 +45,9 @@ function createSlides(data) {
             case 'two-column-with-images':
                 slidesHTML += createTwoColumnWithImagesSlide(slide, index);
                 break;
+            case 'video':
+                slidesHTML += createVideoSlide(slide, index);
+                break;
             default:
                 slidesHTML += createContentSlide(slide, index);
         }
@@ -468,6 +471,19 @@ function initializeNavigation() {
         currentSlide = index;
         updateProgressBar(currentSlide, slides.length);
         
+        // Handle video slides - pause videos on non-active slides, play on active slides
+        document.querySelectorAll('.slide:not(.active) video').forEach(video => {
+            video.pause();
+        });
+        
+        // Play the video if it's a video slide
+        const activeVideo = slides[index].querySelector('video');
+        if (activeVideo) {
+            // Reset the video to the beginning and play it
+            activeVideo.currentTime = 0;
+            activeVideo.play();
+        }
+        
         // Reset section counter when changing slides
         currentSection = 0;
         
@@ -593,6 +609,21 @@ function initializeNavigation() {
             }
         }
     });
+}
+
+// Create a video slide
+function createVideoSlide(slide, index) {
+    // Create a clean fullscreen video slide with no overlays
+    return `
+        <div class="slide video-slide pure-video-slide" id="slide-${index + 1}">
+            <div class="pure-video-container">
+                <video muted autoplay loop>
+                    <source src="${slide.videoSrc}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    `;
 }
 
 // Update the progress bar
