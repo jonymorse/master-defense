@@ -51,19 +51,7 @@
       },
       "content": "diagrams/layered-architecture.svg"
     },
-    {
-      "type": "content",
-      "title": "System Architecture",
-      "header": {
-        "logo": "LSU",
-        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
-      },
-      "footer": {
-        "left": "Louisiana State University",
-        "right": "Page 3"
-      },
-      "content": "diagrams/svgviewer-output.svg"
-    },
+
     {
       "type": "two-column-with-images",
       "title": "Hardware & Software Components",
