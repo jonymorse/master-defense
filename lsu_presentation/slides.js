@@ -48,6 +48,9 @@ function createSlides(data) {
             case 'video':
                 slidesHTML += createVideoSlide(slide, index);
                 break;
+            case 'paused-video':
+                slidesHTML += createPausedVideoSlide(slide, index);
+                break;
             default:
                 slidesHTML += createContentSlide(slide, index);
         }
@@ -70,18 +73,16 @@ function createSlides(data) {
 function createTitleSlide(slide, index) {
     return `
         <div class="slide title-slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>Towards High-Fidelity VR Simulation of HRI Tasks</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="title-content">
                 <div class="slide-title">${slide.title}</div>
                 <div class="slide-subtitle">${slide.subtitle}</div>
                 <div class="authors">${slide.authors}</div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right}</div>
             </div>
@@ -109,18 +110,15 @@ function createContentSlide(slide, index) {
                         </div>
                     `).join('')}
                 </div>
-                <!-- Progress indicator removed -->
             </div>
         `;
         
         // Return early to avoid getting content processed again
         return `
             <div class="slide progressive-slide" id="slide-${index + 1}">
-                <div class="lsu-header">
-                    <div class="lsu-logo">
-                        <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                    </div>
-                    <div>${slide.header.text}</div>
+                <div class="slide-header">
+                    <div>${slide.header.left || ''}</div>
+                    <div>${slide.header.right || ''}</div>
                 </div>
                 <div class="slide-title">${slide.title}</div>
                 <div class="slide-content centered-content">
@@ -128,7 +126,7 @@ function createContentSlide(slide, index) {
                         ${contentHTML}
                     </div>
                 </div>
-                <div class="lsu-footer">
+                <div class="slide-footer">
                     <div>${slide.footer.left}</div>
                     <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
                 </div>
@@ -140,9 +138,7 @@ function createContentSlide(slide, index) {
         // Special case for architecture diagram - full slide image
         contentHTML = `
             <div class="diagram-container">
-                <img src="${slide.content}" alt="System Architecture Diagram" class="full-slide-diagram">
-            </div>
-            <div class="centered-caption">
+                <img src="${slide.content}" alt="System Architecture Diagram" class="slide-image">
             </div>
         `;
     } else if (Array.isArray(slide.content)) {
@@ -159,10 +155,7 @@ function createContentSlide(slide, index) {
                 // Special case for architecture diagram - full slide image
                 return `
                     <div class="diagram-container">
-                        <img src="${items}" alt="System Architecture Diagram" class="full-slide-diagram">
-                    </div>
-                    <div class="centered-caption">
-                        <p class="caption">Layered Blueprint Architecture for VR Training System</p>
+                        <img src="${items}" alt="System Architecture Diagram" class="slide-image">
                     </div>
                 `;
             } else {
@@ -189,11 +182,9 @@ function createContentSlide(slide, index) {
     
     return `
         <div class="slide ${index === 1 ? 'progressive-slide' : ''}" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content centered-content">
@@ -201,7 +192,7 @@ function createContentSlide(slide, index) {
                     ${contentHTML}
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -241,23 +232,15 @@ function createContentWithImageSlide(slide, index) {
         Object.values(slide.content).flat().length : 
         (Array.isArray(slide.content) ? slide.content.length : 1);
     
-    // Special case for architecture diagram (slide 3)
+    // Define column classes
     let leftColumnClass = "column";
     let rightColumnClass = "column column-with-image";
     
-    // Add architecture-diagram class for slide 3
-    if (index === 2) { // index 2 is the third slide (slide 3)
-        leftColumnClass += " arch-text-column";
-        rightColumnClass += " arch-diagram-column";
-    }
-    
     return `
         <div class="slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content">
@@ -271,7 +254,7 @@ function createContentWithImageSlide(slide, index) {
                     </div>
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -314,11 +297,9 @@ function createContentWithImageGridSlide(slide, index) {
     
     return `
         <div class="slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content standard-grid-layout">
@@ -329,7 +310,7 @@ function createContentWithImageGridSlide(slide, index) {
                     ${imagesHTML}
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -341,11 +322,9 @@ function createContentWithImageGridSlide(slide, index) {
 function createTwoColumnSlide(slide, index) {
     return `
         <div class="slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content">
@@ -362,7 +341,7 @@ function createTwoColumnSlide(slide, index) {
                     </ul>
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -376,11 +355,9 @@ function createTwoColumnWithImageSlide(slide, index) {
     
     return `
         <div class="slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content two-col-image-layout">
@@ -403,7 +380,7 @@ function createTwoColumnWithImageSlide(slide, index) {
                     ${captionHTML}
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -415,11 +392,9 @@ function createTwoColumnWithImageSlide(slide, index) {
 function createTwoColumnWithImagesSlide(slide, index) {
     return `
         <div class="slide" id="slide-${index + 1}">
-            <div class="lsu-header">
-                <div class="lsu-logo">
-                    <img src="../PNG Files/logo_gold.png" alt="LSU Electrical Engineering Logo">
-                </div>
-                <div>${slide.header.text}</div>
+            <div class="slide-header">
+                <div>${slide.header.left || ''}</div>
+                <div>${slide.header.right || ''}</div>
             </div>
             <div class="slide-title">${slide.title}</div>
             <div class="slide-content">
@@ -442,7 +417,7 @@ function createTwoColumnWithImagesSlide(slide, index) {
                     </div>
                 </div>
             </div>
-            <div class="lsu-footer">
+            <div class="slide-footer">
                 <div>${slide.footer.left}</div>
                 <div>${slide.footer.right || 'Page ' + (index + 1)}</div>
             </div>
@@ -457,6 +432,9 @@ function initializeNavigation() {
     let currentSlide = 0;
     let currentSection = 0;
     let totalSections = 0; // Will be set for slide 2
+    let videoPaused = false; // Track if video is at a pause point
+    let currentPausePointIndex = 0; // Track which pause point we're at
+    let videoFinishedPlaying = false; // Track if video has finished playing after last pause
     
     function showSlide(index) {
         if (index < 0) index = 0;
@@ -475,9 +453,46 @@ function initializeNavigation() {
         // Play the video if it's a video slide
         const activeVideo = slides[index].querySelector('video');
         if (activeVideo) {
-            // Reset the video to the beginning and play it
-            activeVideo.currentTime = 0;
-            activeVideo.play();
+            // Check if it's a paused video slide
+            if (slides[index].classList.contains('paused-video-slide')) {
+                // Initialize paused video
+                const pausePoints = slides[index].getAttribute('data-pause-points').split(',').map(Number);
+                videoPaused = false;
+                currentPausePointIndex = 0;
+                videoFinishedPlaying = false; // Reset video state
+                
+                // Reset and play the video
+                activeVideo.currentTime = 0;
+                activeVideo.play();
+                
+                // Clear any existing listeners
+                activeVideo.onended = null;
+                activeVideo.ontimeupdate = null;
+                
+                // Add ended event listener to mark video as completed
+                activeVideo.addEventListener('ended', function() {
+                    videoPaused = true;
+                    videoFinishedPlaying = true;
+                });
+                
+                // Add time update listener for pause points
+                activeVideo.ontimeupdate = function() {
+                    if (currentPausePointIndex < pausePoints.length && !videoPaused) {
+                        const currentTime = this.currentTime;
+                        const nextPausePoint = pausePoints[currentPausePointIndex];
+                        
+                        // If we've reached a pause point
+                        if (currentTime >= nextPausePoint) {
+                            this.pause();
+                            videoPaused = true;
+                        }
+                    }
+                };
+            } else {
+                // Regular video slide - just play
+                activeVideo.currentTime = 0;
+                activeVideo.play();
+            }
         }
         
         // Reset section counter when changing slides
@@ -538,6 +553,27 @@ function initializeNavigation() {
         const containerWidth = slideContainer.offsetWidth;
         const clickX = e.clientX;
         
+        // Check if we're on a paused video slide and the video is paused at a pause point
+        const currentSlideElement = slides[currentSlide];
+        if (currentSlideElement.classList.contains('paused-video-slide') && videoPaused) {
+            const video = currentSlideElement.querySelector('video');
+            const pausePoints = currentSlideElement.getAttribute('data-pause-points').split(',').map(Number);
+            
+            // If the video has finished playing, go to the next slide
+            if (videoFinishedPlaying) {
+                showSlide(currentSlide + 1);
+                return;
+            }
+            
+            // Otherwise, increment the pause point index and continue playing
+            currentPausePointIndex++;
+            
+            // Continue playing the video
+            videoPaused = false;
+            video.play();
+            return;
+        }
+        
         if (currentSlide === 1) {
             // Special handling for slide 2
             if (clickX < containerWidth / 2) {
@@ -565,6 +601,29 @@ function initializeNavigation() {
     
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
+        // Check if we're on a paused video slide and the video is paused at a pause point
+        const currentSlideElement = slides[currentSlide];
+        if (currentSlideElement.classList.contains('paused-video-slide') && videoPaused) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                const video = currentSlideElement.querySelector('video');
+                const pausePoints = currentSlideElement.getAttribute('data-pause-points').split(',').map(Number);
+                
+                // If the video has finished playing, go to the next slide
+                if (videoFinishedPlaying) {
+                    showSlide(currentSlide + 1);
+                    return;
+                }
+                
+                // Otherwise, increment the pause point index and continue playing
+                currentPausePointIndex++;
+                
+                // Continue playing the video
+                videoPaused = false;
+                video.play();
+                return;
+            }
+        }
+        
         if (currentSlide === 1) {
             // Special handling for slide 2
             if (e.key === 'ArrowRight' || e.key === ' ') {
@@ -594,6 +653,32 @@ function createVideoSlide(slide, index) {
         <div class="slide video-slide pure-video-slide" id="slide-${index + 1}">
             <div class="pure-video-container">
                 <video muted autoplay loop>
+                    <source src="${slide.videoSrc}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    `;
+}
+
+// Create a video slide with pause points
+function createPausedVideoSlide(slide, index) {
+    // Create a fullscreen video slide with pause points
+    // Convert frames to time if frames are provided
+    let pausePointsAttribute = '';
+    
+    if (slide.pauseFrames && slide.framerate) {
+        // Convert frames to seconds
+        const pausePoints = slide.pauseFrames.map(frame => frame / slide.framerate);
+        pausePointsAttribute = pausePoints.join(',');
+    } else if (slide.pausePoints) {
+        pausePointsAttribute = slide.pausePoints.join(',');
+    }
+    
+    return `
+        <div class="slide video-slide paused-video-slide pure-video-slide" id="slide-${index + 1}" data-pause-points="${pausePointsAttribute}">
+            <div class="pure-video-container">
+                <video id="paused-video-${index + 1}" muted>
                     <source src="${slide.videoSrc}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>

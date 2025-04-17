@@ -1,0 +1,29 @@
+/* Custom styling to fix the size of the System Architecture diagram */
+
+/* Target specifically the architecture diagram slide (#slide-3) */
+#slide-3 .diagram-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 200px);
+}
+
+#slide-3 .diagram-container img.slide-image {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 500px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Add some spacing and improved styling */
+#slide-3 .slide-title {
+  margin-bottom: 20px;
+}
+
+#slide-3 .slide-content {
+  margin-top: 40px;
+}

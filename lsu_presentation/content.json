@@ -7,45 +7,37 @@
       "subtitle": "Developing for Future-Ready Workforces",
       "authors": "Jonathan Erkin Morse",
       "header": {
-        "logo": "Louisiana State University",
-        "text": "College of Engineering"
+        "left": "",
+        "right": ""
       },
       "footer": {
-        "left": "Louisiana State University",
-        "right": "Master's Defense"
+        "left": "Master's Defense Presentation",
+        "right": "2025"
       }
     },
     {
       "type": "content",
       "title": "Research Overview",
       "header": {
-        "logo": "LSU",
-        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+        "left": "VR Design",
+        "right": "Jonathan E. Morse"
       },
       "footer": {
         "left": "Louisiana State University",
         "right": "Page 2"
       },
       "content": {
-        "Problem:": [
-            "Traditional construction education often lacks training in Computational Thinking (CT) needed for modern, technology-driven workplaces involving robotics and Human-Robot Interaction (HRI)."
-        ],
-        "Goal:": [
-            "To develop and evaluate a Virtual Reality (VR) training environment designed to integrate CT as a core competency for construction students through immersive HRI scenarios."
-        ],
-        "Key Research Questions:": [
-            "1. How effective is the VR-based HRI training environment in enhancing specific Computational Thinking (CT) competencies (decomposition, pattern recognition, abstraction, algorithmic thinking) among construction students?",
-            "2. What is the impact of the VR training on students' skills (e.g., accuracy, speed, safety) and attitudes (e.g., confidence, persistence) related to robotic construction tasks?",
-            "3. How well do skills and CT competencies acquired in the VR training transfer to novel simulated environments (realistic terrestrial and extraterrestrial construction sites)?",
-            "4. What relationships exist between CT knowledge, attitudes, and skill performance within this VR training context?"
-        ],
-        "Approach:": [
-            "Developed a VR training environment featuring pick-and-place tasks with a robotic arm on a Mecanum wheel platform.",
-            "Created progressive difficulty levels across diverse scenarios (terrestrial/extraterrestrial).",
-            "Implemented a Knowledge-Skill-Attitude (KSA) framework for comprehensive assessment."
+        "Problem": "Construction curricula don’t teach the design skills needed to build immersive VR‑based HRI training.",
+        "Objective": "Design and validate a VR environment that teaches Computational Thinking via robotic pick‑and‑place tasks.",
+        "Key Question": "How can we **design** a high‑fidelity VR‑based HRI training system that effectively develops CT skills, boosts task performance, and supports transfer across terrestrial and extraterrestrial scenarios?",
+        "Approach": [
+          "Unreal Engine sim with modular, progressive difficulty levels",
+          "Mecanum‑wheel robot arm pick‑and‑place task design",
+          "Iterative evaluation using a Knowledge‑Skill‑Attitude (KSA) framework"
         ]
       }
     },
+    
     {
       "type": "content",
       "title": "System Architecture",
@@ -58,6 +50,19 @@
         "right": "Page 3"
       },
       "content": "diagrams/layered-architecture.svg"
+    },
+    {
+      "type": "content",
+      "title": "System Architecture",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 3"
+      },
+      "content": "diagrams/svgviewer-output.svg"
     },
     {
       "type": "two-column-with-images",
@@ -93,187 +98,82 @@
         "image": "images/Unreal_Engine_Logo.svg.png"
       }
     },
+
     {
-      "type": "content-with-image-grid",
-      "title": "Environment Construction",
+      "type": "paused-video",
+      "title": "Forward Movement Demo",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 5"
+        "right": "Page 15"
       },
-      "content": {
-        "Training Environment:": [
-          "Warehouse setting with configurable obstacles",
-          "Dynamic and static obstacle placement system",
-          "Progressive complexity levels for skill building",
-          "Real-time performance monitoring and feedback"
-        ],
-        "Testing Environments:": [
-          "Realistic construction site with authentic constraints",
-          "Extraterrestrial setting with modified physics (low gravity)",
-          "Specialized challenges requiring computational thinking",
-          "Data capture for comprehensive performance assessment"
-        ]
-      },
-      "images": ["images/image1.jpeg", "images/image2.png", "images/image3.png"]
+      "videoSrc": "videos/Forward.mp4",
+      "framerate": 30
     },
     {
-      "type": "two-column",
-      "title": "Training Task Structure",
+      "type": "paused-video",
+      "title": "Lateral Movement Demo",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 6"
+        "right": "Page 16"
       },
-      "leftColumn": {
-        "title": "Training Tasks (4 Levels)",
-        "items": [
-          "Level 1: Basic pick-and-place with static obstacles",
-          "Level 2: Dynamic moving obstacles added",
-          "Level 3: Static obstacles with inclined surfaces",
-          "Level 4: Combined dynamic obstacles and inclined surfaces"
-        ]
-      },
-      "rightColumn": {
-        "title": "Testing Tasks (2 Levels)",
-        "items": [
-          "Testing 1: Realistic construction site environment",
-          "Testing 2: Extraterrestrial construction with low-gravity physics",
-          "Both require integration of previously learned skills",
-          "Performance metrics tracked for comprehensive assessment"
-        ]
-      }
+      "videoSrc": "videos/Lateral.mp4",
+      "framerate": 30
     },
     {
-      "type": "content",
-      "title": "Technical Implementation",
+      "type": "paused-video",
+      "title": "Backward Movement Demo",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 7"
+        "right": "Page 17"
       },
-      "content": {
-        "VR Development:": [
-          "Unreal Engine environment with high-fidelity physics",
-          "Custom textures and models for construction elements",
-          "Optimized performance for smooth VR experience",
-          "Precise collision detection for accurate task assessment"
-        ],
-        "Robotic System Simulation:": [
-          "Accurate kinematic model of robotic arm",
-          "Physics-based Mecanum wheel platform movement",
-          "Real-time force feedback during object manipulation",
-          "Sensor simulation for environmental awareness"
-        ]
-      }
+      "videoSrc": "videos/Reverse.mp4",
+      "framerate": 30
     },
     {
-      "type": "content",
-      "title": "Computational Thinking Integration",
+      "type": "paused-video",
+      "title": "Robot Arm Demo",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 8"
+        "right": "Page 18"
       },
-      "content": {
-        "CT Components Implemented:": [
-          "Decomposition: Breaking complex pick-and-place tasks into subtasks",
-          "Pattern Recognition: Identifying efficient movement sequences",
-          "Abstraction: Creating simplified models for task execution",
-          "Algorithmic Thinking: Developing step-by-step procedures for optimal paths"
-        ],
-        "Assessment Framework:": [
-          "Knowledge assessment through CT concept application surveys",
-          "Skill measurement via task performance metrics",
-          "Attitude evaluation through confidence and persistence surveys",
-          "Comprehensive evaluation of CT competency development"
-        ]
-      }
+      "videoSrc": "videos/RobotArm.mp4",
+      "pauseFrames": [150, 300],
+      "framerate": 30
     },
     {
-      "type": "content",
-      "title": "System Limitations and Future Development",
+      "type": "paused-video",
+      "title": "Training Level 1",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 9"
+        "right": "Page 19"
       },
-      "content": {
-        "Current Limitations:": [
-          "Small sample size (five participants) limits statistical power",
-          "Fixed difficulty progression may not adapt to individual learning rates",
-          "Limited variety of construction scenarios and tasks",
-          "Current focus only on pick-and-place operations"
-        ],
-        "Future Development:": [
-          "Adaptive learning mechanisms for personalized training",
-          "Expanded task variety beyond pick-and-place operations",
-          "More complex construction scenarios with greater realism",
-          "Multi-user collaboration capabilities for team training",
-          "Integration with physical robots for hybrid training approaches"
-        ]
-      }
+      "videoSrc": "videos/level1.mp4",
+      "pauseFrames": [150, 300],
+      "framerate": 30
     },
     {
-      "type": "content",
-      "title": "Conclusion",
-      "header": {
-        "logo": "LSU",
-        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
-      },
-      "footer": {
-        "left": "Louisiana State University",
-        "right": "Page 10"
-      },
-      "content": {
-        "System Effectiveness:": [
-          "VR environment successfully enhanced CT competencies",
-          "Virtual robotic system provided effective training platform",
-          "Progressive task structure facilitated skill development",
-          "Performance metrics demonstrated clear improvement trends",
-          "Results validate the technical approach and system architecture"
-        ],
-        "Impact:": [
-          "Provides foundation for future construction training systems",
-          "Demonstrates viability of VR for technical skill development",
-          "Creates pathway for extraterrestrial construction training",
-          "Establishes framework for CT integration in technical education"
-        ]
-      }
-    },
-    {
-      "type": "video",
-      "title": "Construction Site Simulation",
-      "header": {
-        "logo": "LSU",
-        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
-      },
-      "footer": {
-        "left": "Louisiana State University",
-        "right": "Page 11"
-      },
-      "videoSrc": "videos/output_clean.mp4",
-      "videoTitle": "High-Fidelity Construction Site Environment",
-      "videoDescription": "Final rendering of the construction site environment used for testing trained skills and computational thinking competencies."
-    },
-    {
-      "type": "video",
-      "title": "Construction Site Simulation",
+      "type": "paused-video",
+      "title": "Level 2 Training Environment",
       "header": {
         "logo": "LSU",
         "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
@@ -282,9 +182,71 @@
         "left": "Louisiana State University",
         "right": "Page 12"
       },
-      "videoSrc": "videos/looped_output_level1.mp4",
+      "videoSrc": "videos/level2.mp4",
+      "pauseFrames": [420, 722],
+      "framerate": 30,
+      "advanceOnEnd": true
+    },
+    {
+      "type": "paused-video",
+      "title": "Level 3 Training Environment",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 13"
+      },
+      "videoSrc": "videos/level3.mp4",
+      "pauseFrames": [150, 300, 499],
+      "framerate": 30,
+      "advanceOnEnd": true
+    },
+    {
+      "type": "paused-video",
+      "title": "Training Level 4",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 20"
+      },
+      "videoSrc": "videos/level4.mp4",
+      "pauseFrames": [150, 300],
+      "framerate": 30
+    },
+    {
+      "type": "video",
+      "title": "Construction Site Simulation",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 22"
+      },
+      "videoSrc": "videos/ConstructionSite.mp4",
       "videoTitle": "High-Fidelity Construction Site Environment",
       "videoDescription": "Final rendering of the construction site environment used for testing trained skills and computational thinking competencies."
+    },
+    {
+      "type": "paused-video",
+      "title": "Lunar Environment",
+      "header": {
+        "logo": "LSU",
+        "text": "Towards High-Fidelity VR Simulation of HRI Tasks"
+      },
+      "footer": {
+        "left": "Louisiana State University",
+        "right": "Page 21"
+      },
+      "videoSrc": "videos/Moon.mp4",
+      "pauseFrames": [150, 300],
+      "framerate": 30
     },
     {
       "type": "content",
@@ -295,7 +257,7 @@
       },
       "footer": {
         "left": "Louisiana State University",
-        "right": "Page 12"
+        "right": "Page 23"
       },
       "content": "acknowledgement",
       "acknowledgementText": [

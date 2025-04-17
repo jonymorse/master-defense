@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f5f7fa" rx="8" ry="8"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" font-weight="bold" fill="#2d3748">HRC Training Study Server Architecture</text>
+  
+  <!-- Main Container -->
+  <rect x="50" y="60" width="700" height="510" fill="#ffffff" rx="8" ry="8" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- Server Container -->
+  <rect x="70" y="90" width="440" height="460" fill="#f0f9ff" rx="8" ry="8" stroke="#90cdf4" stroke-width="2"/>
+  <text x="290" y="115" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" font-weight="bold" fill="#2c5282">Node.js Server</text>
+  
+  <!-- Server Components -->
+  <!-- Express Web Server -->
+  <rect x="90" y="130" width="180" height="80" fill="#ebf8ff" rx="8" ry="8" stroke="#63b3ed" stroke-width="2"/>
+  <text x="180" y="155" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#2b6cb0">Express Web Server</text>
+  <text x="180" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">HTTP API &amp; Static Content</text>
+  <text x="180" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">(server.js)</text>
+  
+  <!-- WebSocket Server -->
+  <rect x="90" y="220" width="180" height="80" fill="#e6fffa" rx="8" ry="8" stroke="#38b2ac" stroke-width="2"/>
+  <text x="180" y="245" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#2c7a7b">WebSocket Server</text>
+  <text x="180" y="265" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">Real-time Communication</text>
+  <text x="180" y="285" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">(server.js)</text>
+  
+  <!-- Database Manager -->
+  <rect x="90" y="310" width="180" height="80" fill="#ebf4ff" rx="8" ry="8" stroke="#5a67d8" stroke-width="2"/>
+  <text x="180" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#434190">Database Manager</text>
+  <text x="180" y="355" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">Data Storage &amp; Retrieval</text>
+  <text x="180" y="375" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">(dbManager.js)</text>
+  
+  <!-- Route Handlers -->
+  <rect x="310" y="130" width="180" height="170" fill="#fffaf0" rx="8" ry="8" stroke="#ed8936" stroke-width="2"/>
+  <text x="400" y="155" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#c05621">Route Handlers</text>
+  
+  <rect x="320" y="175" width="160" height="50" fill="#feebc8" rx="4" ry="4" stroke="#ed8936" stroke-width="1"/>
+  <text x="400" y="205" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#4a5568">Admin Routes</text>
+  
+  <rect x="320" y="235" width="160" height="50" fill="#feebc8" rx="4" ry="4" stroke="#ed8936" stroke-width="1"/>
+  <text x="400" y="265" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#4a5568">Data Routes</text>
+  
+  <!-- Export Service -->
+  <rect x="310" y="310" width="180" height="80" fill="#f0fff4" rx="8" ry="8" stroke="#48bb78" stroke-width="2"/>
+  <text x="400" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#2f855a">Export Service</text>
+  <text x="400" y="355" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">Data Export to CSV</text>
+  <text x="400" y="375" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">(export.js)</text>
+  
+  <!-- Database -->
+  <rect x="90" y="400" width="400" height="130" fill="#f7fafc" rx="8" ry="8" stroke="#a0aec0" stroke-width="2"/>
+  <text x="290" y="425" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#4a5568">SQLite Database</text>
+  
+  <!-- Database Tables -->
+  <rect x="100" y="440" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="150" y="460" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">participants</text>
+  
+  <rect x="210" y="440" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="260" y="460" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">sessions</text>
+  
+  <rect x="320" y="440" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="370" y="460" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">level_events</text>
+  
+  <rect x="100" y="480" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="150" y="500" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">brick_drops</text>
+  
+  <rect x="210" y="480" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="260" y="500" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">collisions</text>
+  
+  <rect x="320" y="480" width="100" height="30" fill="#e2e8f0" rx="4" ry="4"/>
+  <text x="370" y="500" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#2d3748">input_events</text>
+  
+  <!-- Client Side -->
+  <rect x="530" y="90" width="200" height="320" fill="#fff5f7" rx="8" ry="8" stroke="#f687b3" stroke-width="2"/>
+  <text x="630" y="115" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" font-weight="bold" fill="#97266d">Client Side</text>
+  
+  <!-- Unreal Engine -->
+  <rect x="550" y="130" width="160" height="110" fill="#fed7e2" rx="8" ry="8" stroke="#d53f8c" stroke-width="2"/>
+  <text x="630" y="155" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#702459">Unreal Engine</text>
+  <text x="630" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">HRC Training Simulation</text>
+  <text x="630" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">WebSocket Client</text>
+  <text x="630" y="215" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">Telemetry Collection</text>
+  
+  <!-- Web Interface -->
+  <rect x="550" y="250" width="160" height="150" fill="#fefcbf" rx="8" ry="8" stroke="#ecc94b" stroke-width="2"/>
+  <text x="630" y="275" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#975a16">Web Interface</text>
+  
+  <rect x="560" y="290" width="140" height="45" fill="#faf089" rx="4" ry="4" stroke="#ecc94b" stroke-width="1"/>
+  <text x="630" y="315" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#4a5568">Admin Interface</text>
+  <text x="630" y="330" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a5568">(admin.html)</text>
+  
+  <rect x="560" y="345" width="140" height="45" fill="#faf089" rx="4" ry="4" stroke="#ecc94b" stroke-width="1"/>
+  <text x="630" y="370" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="bold" fill="#4a5568">Data Interface</text>
+  <text x="630" y="385" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#4a5568">(data.html)</text>
+  
+  <!-- Data Export -->
+  <rect x="530" y="420" width="200" height="80" fill="#e6fffa" rx="8" ry="8" stroke="#38b2ac" stroke-width="2"/>
+  <text x="630" y="445" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#2c7a7b">Data Export</text>
+  <text x="630" y="465" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">CSV Files</text>
+  <text x="630" y="485" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4a5568">Organized by Participant &amp; Level</text>
+  
+  <!-- Connection Lines -->
+  <!-- Express to WebSocket -->
+  <line x1="180" y1="210" x2="180" y2="220" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- WebSocket to DB Manager -->
+  <line x1="180" y1="300" x2="180" y2="310" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- Express to Route Handlers -->
+  <line x1="270" y1="170" x2="310" y2="170" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- Route Handlers to DB Manager -->
+  <line x1="400" y1="300" x2="400" y2="310" stroke="#4a5568" stroke-width="2"/>
+  <line x1="230" y1="350" x2="310" y2="350" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- DB Manager to DB -->
+  <line x1="180" y1="390" x2="180" y2="400" stroke="#4a5568" stroke-width="2"/>
+  <line x1="400" y1="390" x2="400" y2="400" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- Export to DB -->
+  <line x1="310" y1="360" x2="290" y2="400" stroke="#4a5568" stroke-width="2"/>
+  
+  <!-- Export to Files -->
+  <line x1="490" y1="350" x2="530" y2="440" stroke="#4a5568" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Client to Server -->
+  <line x1="550" y1="185" x2="490" y2="230" stroke="#4a5568" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="550" y1="315" x2="490" y2="170" stroke="#4a5568" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="550" y1="370" x2="490" y2="255" stroke="#4a5568" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Legend -->
+  <rect x="200" y="540" width="400" height="20" fill="none" stroke="none"/>
+  
+  <rect x="210" y="540" width="20" height="5" fill="#4a5568" stroke="none"/>
+  <text x="265" y="545" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#4a5568">Direct Connection</text>
+  
+  <rect x="320" y="540" width="20" height="5" fill="none" stroke="#4a5568" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="390" y="545" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#4a5568">Network/File Connection</text>
+</svg>
